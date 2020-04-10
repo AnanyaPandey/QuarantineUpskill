@@ -1,0 +1,79 @@
+Sets 
+
+Sets : Unorderd collection of unordered elements
+Protocols
+
+
+Sets are mutable
+Elements in the sets must be immutable. 
+
+s = set([1,5,7,8,6,4,3,4])
+4 in s
+True 
+
+s.add(2)
+s.update([22,33,22])
+
+s.remove(23)
+y = s.copy()
+
+blue_eys = {'olive','john','marry','lissa'}
+blone = {'matt','jack','rod','phillip','simon','john'}
+smell = {'sylvia','jacob','john','phillip'}
+taste_ptc = {'Hary','Lilly','Lola','olive'}
+o_blood = {'Mia','Joshua','Jacob','John','rod'}
+b_blood = {'phillip','marry','lissa'}
+ab_blood = {'matt','Hary','Lilly'}  
+
+blue_eys.union(ab_blood)
+blue_eys.intersection(ab_blood)
+
+# difference A - B 
+# A - (A Intersection B) 
+# A - B NOT EQUAL TO B - A 
+blue_eys.difference(o_blood)
+
+# Symettric difference 
+# A or B but not BOTH
+blone.symmetric_difference(blue_eys)
+
+ab_blood.issubset(blone)
+False
+blue_eys.issuperset(b_blood)
+False
+
+#### Disjoint ! = Nothing in common
+blue_eys.isdisjoint(smell)
+
+############## Protocol ###############
+
+a set of operations that a type must support to implement the protocol
+no need to define as base or interface
+
+Protocol
+-------------------
+Container				str,list,dict,range,tuple,set,bytes 
+Sized					str,list,dict,range,tuple,set,bytes 
+Iterable				str,list,dict,range,tuple,set,bytes 
+Sequence				str,list,dict,range,tuple,bytes 
+Mutable Sequence		list
+Mutable set 			Set
+Mutable Mapping 		dict
+
+# Item present in Continer
+item in container
+
+# Sized
+len(container)
+
+# Iterable
+for item in iterable:
+	print(item)
+
+# Sequence 
+item = sequence[index]
+i = sequence.index(item) # search through item
+num = sequence.count(item)
+r = reversed(sequence) # can be reversed 
+
+
