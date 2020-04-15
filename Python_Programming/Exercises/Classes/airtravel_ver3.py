@@ -26,8 +26,12 @@ class Flight:
         row_text = seat[:-1]
         row = int(row_text)
         letter = seat[-1]
+        if row not in rows:
+            raise ValueError(f"Invalid Row Number {row}")
         if letter not in seat_letters:
             raise ValueError("Invalied letter for seat")
+        if self._seating[row][letter] is not None:
+            raise ValueError(f"Seat {seat} already occupied")
         self._seating[row][letter] = passenger
 
 # by python convention, implementation details start with _ undescore
