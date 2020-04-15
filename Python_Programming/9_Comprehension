@@ -1,0 +1,114 @@
+
+Iteration and Iterables 
+
+Comprehensions
+Cerating familiar objects
+Creating new type of objects
+Filtering
+Low Level API
+Iterators
+Exceptions 
+generators
+Generator Expressions
+Iteration tools
+
+#################### Comprehensions #########################
+
+Concise syntax to describe list set dictionaries
+It makes code readable and expressive
+It makes it close to natural language
+
+List Comprehension
+words = "There was a story which i wanted to tell yoou but i had no Idea if anyone would believe me".split()
+[len(word) for word in words]
+
+[Expr(Item) for Item in iterable]
+Expr : can be any python expression
+
+Lengh if factorial of numbers from 1 to 20
+from math import factorial
+f = [len(str(factorial(s) for x in range(20) ))]
+
+By default it returns a list.
+
+###### SET COMPREHENSION #######
+
+s = {len(str(factorial(s) for x in range(20) ))}
+
+###### DICT COMPREHENSION #######
+
+{
+	key_expr(item):value_expr(item)
+	for item in Iterable
+
+
+
+##### Example show simple swap #######
+
+country2capital = {'UK':'London',
+'Brazil':'Brazilia'}
+capital2country= {capital:country for country,capital in country2capital.items() }
+
+In dictionary comprehension best suitd iterable is dict.items()
+
+e.g.2
+words = ["hi","hello","how"]
+{x[0]:x for x in words}
+
+Expr could be complex but for readability always put complex expr in separate functions 
+
+e.g.3
+import os
+import glob
+file_sizes = {os.path.realpath(p):os.stat(p).st_size for p in glob.glob('*.py') }
+
+print(file_sizes)
+
+############# Filering comprehension ##############
+
+All three comprehension allow us to chose which item will be evaluated on left
+
+from math import sqrt
+def isprimt(x):
+	if x<2:
+		return False
+	for i in range(2,int(sqrt(x)+1)):
+		if x% i == 0 :
+			return False
+	return True
+
+## Comprehension 
+
+[x for x in range(101) if isprime(x)]
+
+# the expr here is simply x
+# We can add a condition to the loop 
+
+primeSquareDivisor = {x*x:(1,x,x*x) for x in range(20) if isprime(x)}
+primeSquareDivisor
+
+
+Code written once but written again Comprehension are better and less written is better than other. 
+Comprehension doesnt say less computing. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
