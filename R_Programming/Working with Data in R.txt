@@ -1,0 +1,114 @@
+Working with Data in R 
+# transforming data into workable format
+# importing the data - > cleaning the data -> transform 
+# # Export into sharable format 
+# ETL !!  is the same thing 
+
+
+# import 
+# file, database, csv, tdv, web based, xml, html, jason, sql, oralce, mysql, sas, spss, stata all works 
+
+# Cleaning 
+# errors, NA, NANs, Reshaping ; RenamingColumns, Convert Data Types, Meling the Data, Proper encoding, Internal Consistent 
+#( same scale), Errors and Outliers, Handle Missing Values
+# use Builtin and packages to clean the data easily rather than basic 
+
+Base Cleaning
+tidyr : cleaning and reshaping to make it 1 row per data
+reshape2 : more complex cleaning
+stringr : specially for character string manupulation
+lubridate : 
+validate : usable domain rules to check if they obey certain rules 
+
+
+# Transforming 
+Select columns to include 
+Select Rows to include 
+Grows rows 
+ordering rows : sorting merging rows etc. 
+Merge Tables 
+
+Get Data Cleanined and transfomed ready for analysis. 
+base : sorting subsetting etc
+plyr : split apply combine the data within r 
+dplyr : next iteration for data manipulation and databaes next ver of plyr
+data.table : systex simple, for subsetting 
+sqldf :sql realted data transformation 
+
+# Exporting Data : into a new data repository
+wide variety of data repos available csv, tab, web based, html, sml, dtabases, sas, spss, stata, more 
+
+
+e,g, 
+dply : 
+
+provide consistent grammer for data manipulation 
+similar to sql : set of verbs 
+
+select
+filter : filter rows 
+mutate : create new columns into new form 
+summarize : aggreagate set of darta
+arrange : arrange in prticular order 
+
+
+Record steps so that it can be reused without writing complete lines of codes again and again. 
+# For the demo we will be using Motor trans cars 
+
+mtcars Data 
+1. Extraction from Tab limited file 
+setwd("C:/Users/Home/Data")
+
+2. Read Data 
+# anything in "" will be considered quote
+
+3. library(dplyr)
+temp = select(.data = cars,transmission, cylinders, economy) # column names
+
+## Filter 
+tempT <- filter(.data = temp, transmission = "Automatic")
+head(tempT)
+
+## change/mutate
+tempM <- mutate(.data=temp, economy > economy * 0.45) # those with economy greater than 45% economy 
+
+## Grouping 
+tmpG <- group_by(.data = temp, cylinders) # By default it will sum the numerical data
+
+## Summarize / Aggregate
+tempA <- summarize(.data = tempG, avg_consumpttion = mean(economy))
+# we have used tempG because it will be logical to calculate mean of grouped data (one mean per transmission )
+# This will return new type of data structure called Tibble.  with summarized data
+# Tibble is advanced data frame 
+
+# This has provided us data grouped by transmssion with average fuel economy, now will arrange the data in order. 
+teampAA <- arrange(.data = tempA, desc(avg_consumpttion))
+
+# will now we are working with tibble data structure, lers convert back to data frame
+carsEfficiency <- as.data.frame(tempAA)
+
+# The step by step approach mentioned is not good, R supports piping which is a fluent notation. 
+# Also called Methoda Chaining  %>%
+# Linux has piping where it passes the output to other command similarly 
+# first attribute is pased on through %>% to another expression. 
+
+carsEfficiency <- df %>% 
+	select(transmission, cylinders, economy) %>%
+	filter(transmission == "Automatic") %>% 
+	mutate(economy > economy*0.435) %>% 
+	group_by(cylinders) %>%
+	summarize(avg_consumpttion = mean(economy) ) %>%
+	arrange(desc(avg_consumpttion)) %>%
+	as.data.frame()
+
+write.csv("efficiency.csv",row.names=FALSE) # rownames must not be saved inthe csv file. 
+
+
+
+
+
+
+
+
+
+

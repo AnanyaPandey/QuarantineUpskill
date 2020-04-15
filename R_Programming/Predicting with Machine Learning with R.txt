@@ -1,0 +1,112 @@
+Predicting with Machine Learning with R
+
+Predicting
+Demo for decision tree classifier
+ML : sub of AI
+Make decisions to acheive of goal of some kind. 
+We use data to train the model. 
+# e.g. predicting a pic if a pic of cat or not!?
+# most mordern ML based on statistics and data mining.
+# Similar to Data Mining. 
+
+############## Types of ML ##################
+Supervised
+Unsupervised
+Reinforced
+
+Some of imp General ones are : 
+Decision Tree Classifier
+Naive Bayes
+Linear Regression
+Support Vector Machines
+Neural Network
+K Means
+Ensemble 
+
+E.g.
+Classification : Predicting a categorical variable 
+Decision Tree Classifier
+Supervised Learning
+
+Trees : Nodes and Leaves
+Nodes : One for each question
+Leaves : one for each possible answer
+The branches are assigned then probability ( called information gain )
+Easy to understand  and Transparent 
+
+Example : Whether a person is likely to survive in Titanic?
+
+data(iris)
+set.seed(123)
+indexes <- sample (
+	x = 1:150,
+	size = 100 )
+# sample generates random numbers, above will generate 100 random numbers from 1 to 150  
+# randomly generate indexes for the train and test data 
+
+train <- iris[indexes,]
+test <- iris[-indexes,] # all rows EXCEPT indexes
+
+library(tree)
+model <- tree(
+	formula = Species ~. ,
+	data = train)
+# DOT tells to use all other variables 
+
+summary(model)
+
+plot(model)
+text(model)
+
+# We can also plot the decision bountry 
+# we need a libarary to do so 
+
+library(RColorBrewer)
+# to create color pallate
+
+palette <- brewer.pal(3,"Set2")
+
+# Create a Scatter plot 
+plot(
+
+	x = iris$Petal.Length,
+	y = iris$Petal.width,
+	pch = 19,
+	col = palette[as.numeric(iris$Species)],
+	main = " Plotting with and length",
+	xlab = "Petal Length",
+	ylab = Petal Width")
+
+#### Plotting the decision Tree Boundry
+
+partition.tree(
+	tree=model,
+	label = "Species",
+	add = TRUE)
+
+# add these decision boundry to previous plots
+
+predictions <- predict(
+	object = model,
+	newdata = test,
+	type = "class")
+
+table(
+	x = predictions,
+	y = test$Species)
+
+# Classification and regression training
+library(caret)
+confusionMatrix(
+	data = predictions,
+	reference = test$Species)
+
+
+save(model,file = "Tree.RData")
+
+
+
+
+
+
+

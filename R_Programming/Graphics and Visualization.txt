@@ -1,0 +1,103 @@
+Graphics and Visualization 
+
+1. Base Graphics system
+
+barplot(names=df$name,
+	height = df$value
+	col = alpha('#FF681D',0.15),
+	main = "Hello World",
+	xlab = "Name",
+	ylab = "Village")
+
+Everything defined at just first place. Then add details.
+
+
+2. Lattice Plotting system.
+barchart(
+	x = value ~ name,
+	data = df,
+	ylim = c(0,3.1)
+	col = alpha('#FF681D',0.15),
+	main = "Hello World",
+	xlab = "Name",
+	ylab = "Village"))
+
+Lattice is good for multivariable since it is formula based. Available open source. 
+
+3. ggplot2
+grammer of graphics, Lilly walkinson and Hadley wickman
+By adding high level aspects of data visualizations 
+
+ggplot2(
+	data = df,
+	aes(x = name, y = value)) +
+geom_bar(
+	stat = "identity",
+	fill = alpha('#FF681D',0.15)) +
+ggtitle("Hello World") +
+xlab("Name") +
+ylab("Value")
+
+
+layers
+Aestherics
+geoms 
+all constitute part of ggplot2 we can chain multi functions together 
+
+
+Other types 
+Spatial : geographical ; on map.
+Hierarchical data : Organized in tree
+Network data : ER relational
+Data Contained in body of text
+Interactive data visualization is available 
+
+###################### mtcars ######################
+
+
+ggplot(
+	data = carsdata,
+	aes(x=cyl)) +
+geom_bar() + # Create a bar chart;  of geometry. since we are making frequency chart
+ggtitle("This is the main title ") + 
+xlab("X label") +
+ylab("Y Label")
+
+> ggplot(
++     data = carsdata,
++     aes(x=mpg)) +
++     geom_histogram(bins=25) + 
++     ggtitle("Fuel Economy Master Frequency Table") + 
++     xlab("X label") +
++     ylab("Y Label")
+
+
+# Same Graph instead of histogram we add Desntity Geom
+> ggplot(
++     data = carsdata,
++     aes(x=mpg)) +
++     geom_density() + 
++     ggtitle("Fuel Economy Master Frequency Table") + 
++     xlab("X label") +
++     ylab("Y Label")
+
+In a denasity function we have x axis data and y axis probability values 
+
+
+> ggplot(
++     data = carsdata,
++     aes(x=mpg, y=cyl)) +
+	  geom_point()
++     ggtitle("Fuel Economy Master Frequency Table") + 
++     xlab("X label") +
++     ylab("Y Label")
+
+
+
+
+
+
+
+
+
+

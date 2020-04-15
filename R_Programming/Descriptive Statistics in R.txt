@@ -1,0 +1,57 @@
+Descriptive Statistics in R 
+######### Statistical Measures ##########
+
+The foundation of describing data is descriptive 
+1. Summary statistics, help us understand the distribution
+
+Continous Variable v/s Categorical variable 
+different type of description for both type
+
+MEasure of central tendency
+Quantitative value 
+Correlation 
+Correlation coefficient 
+Dispersion
+Standardized scale 
+
+######## most common desccriptive statistics #########
+
+How many cars of each transmission ?
+What does fuel economy distribution look like ?
+
+
+# Create a frequency table
+table(cars$transmission)
+
+table(carsdata$cyl)
+ 4  6  8 
+ 6  3 12 
+
+> min(carsdata$mpg)
+[1] 10.4
+
+> max(carsdata$mpg)
+[1] 33.9
+
+> median(carsdata$mpg)
+[1] 17.8
+
+> quantile(carsdata$mpg)
+  0%  25%  50%  75% 100% 
+10.4 15.2 17.8 21.5 33.9 
+
+
+# Get the correlation coefficient 
+cor(carsdata$mpg,carsdata$mpg)
+# relation between miles per gallon and cylinders in car. 
+
+
+# summary(carsdata)
+REturns the min max quantile etc dat afor all numerical columns. 
+For categorical it returns the frequency
+
+
+
+
+
+

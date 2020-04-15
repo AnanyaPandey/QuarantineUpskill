@@ -1,0 +1,17 @@
+sub protectallsheets()
+dim i as byte
+for i = 1 to worksheets.count
+	worksheets(i).protect
+Next
+End Sub
+
+' dim sht as worksheet
+' For Each sht in worksheets
+'	sht.protect
+' next
+'
+'
+'
+'
+'
+'
