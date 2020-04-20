@@ -1,0 +1,170 @@
+
+Iteration protocols 
+ 
+ taking items one by one and performing some operations with it. 
+
+ Iterable objects == can be passed to iter() to produce an iterator object
+ Iterator object  == can be passed ot next() to get the next value in the sequence
+
+ Iterable = ['Summer','Winder','Rainy','Spring']
+ Iterator = iter(Iterable)
+ next(Iterator)
+ 'Summer'
+ ..
+ ..
+ ..
+ 'Spring'
+ next(Iterator)
+ Err : StopIteration
+
+ Stopping iteration with exception == can be mildly outrageous since it isnt case in other languages
+ Python has a lower level iteration protocols
+
+def first(iterable):
+	iterator = iter(iterable)
+	try:
+		return next(iterator)
+	except StopIteration:
+		raise ValueError("Iterable is Empty")
+
+first(['1st','2nd','3rd','4th'])
+'1st'
+first({'1st','2nd','3rd','4th'})
+'2nd'
+first(set())
+
+######################## Generator Functions #############################
+
+
+Python provides Iterables defined by functions 
+These are evaluated lazy manner (they only compute next value on demand)
+They have capability to create model of infinite sequence with no definite end
+helpful in data streaming, creating log files, also there can be composed into pipelines
+
+Generators must atleast have one yield keyword
+
+def gen12():
+	yield 1
+	yield 2
+	yield 3
+
+ g = gen12()
+
+ next(g)
+ next(g)
+ next(g)
+ Err: StopIteration
+
+ Generators are iterables and hence can be used anywhere else as a normal iterable.
+
+ for v in gen12():
+ 	print(v)
+
+
+## Genrator functions returns the generator objects
+both are independent and can be advanced seprately
+
+h = gen12()
+i = gen12()
+
+h is i 
+False
+
+next(h)
+1
+next(h)
+2
+
+Some Advanced Generators : 
+
+def gen246():
+	print('about to yeild 2')
+	yield 2
+	print('about to yield 4')
+	yield 4
+	print('about to yield 6')
+	yield 6
+	print('about to return')
+
+g = gen246()
+body of the function is not executed yet.
+
+next(g)
+about to yeild 2
+2
+
+..
+..
+
+next(g)
+about to yield 6
+6
+next(g)
+Err: 
+
+################ Maintaining state in generators ####################
+Generators helps in complex control flows
+its better /easier to see in the GUi debugger : Pycharm
+
+Continue Keyword : Complets the current iteration in loop and starts the next iteration.
+Genrators can be safely used to create infinitely long sequences like :
+1. Sensor Readings
+2. Mathematical Sequences
+3. Contents of Large Fi;es, like Terabytes
+
+
+Generator function for lucas series
+def lucas():
+	# lucas series starts with 2 1 and then other items are the sum of two proceeding values. 
+	yield 2 
+	a = 2
+	b = 1
+	while True:
+		yield b
+		a,b = b,a+b
+# This was a sequence of infinite objects and is always True. It can be now used as asny other iterable object
+for x in lucas():
+# 	print(x) will run for infinite times untill system run out of memory
+# use CTRL+C to terminate the loop
+ 	 
+
+
+############## Generator Expressions ################
+Different between comprehension and expression
+this is very similar to list comprehensionns
+(Expr(item) for item in iterable)
+
+Useful when we want lazy evaluation of generators with declared expressions of comprehensions. 
+# something that will crete first million sq
+
+millionsquares = (x*x for x in range(1,1000001))
+millionsquares
+<generator object <genexpr> at 0x102943e50>
+list(millionsquares)[-10]
+
+this list just consumed approx 40 MB of memory
+Generator object is just an iterator. It doesnt run the exhaustive list ever. 
+Thus if run entire list it will return nothing. 
+
+Generator objects are single use objects. Each time we cann gen function it will return gen Object. 
+# to re crete a generator from a generator we must execute the expr again. 
+
+E.g. 
+Calculating sum of 10 mil numbers, through list comprehension it would tke approx 400 MB. 
+sum(x*x for x in range(1,100000))
+
+
+func (   expr(item) for item in iterable    )
+fucn ((                                    ))
+# second set of parenthesis is yet allowed. 
+
+Just like Comprehension, it can also has if clause.
+func (   expr(item) for item in iterable  if condition  )
+
+
+######################## Iteration Tools ##########################
+
+
+
+
+

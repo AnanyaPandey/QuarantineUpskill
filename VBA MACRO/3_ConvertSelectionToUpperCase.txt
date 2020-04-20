@@ -1,0 +1,9 @@
+ ' For Each Next Loop 
+ ' ConvertSelectionToUpperCase
+ Sub ConvertSelectionToUpperCase()
+ dim rng as Range
+ for each rng in Selection
+	rng = ucase(rng)
+ Next
+ 
+ End sub

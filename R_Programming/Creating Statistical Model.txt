@@ -1,0 +1,37 @@
+Creating Statistical Model 
+############ Statistical Models in R #############
+
+We will use the IRIS data for the demonstration.
+
+irisdf <- data(iris)
+plot(
+	x = irisdf$petal.length,
+	y = irisdf$petal.width,
+	main = "Plotting length and width data",
+	xlab = "Length",
+	tlab = "Width")
+
+model <- lm(formula = petal.width ~ petal.length, data =irisdf)
+# Formula is like y = f(x) This ~ depends on This
+summary(model)
+
+# Lets Draw the fitted values on the plot. 
+lines(
+  x = irisdf$Petal.Length,
+  y = model$fitted.values,
+  col = "red",
+  lwd = 3)
+
+# Checking the correlation between  dependent variable and predictor variable.
+cor(
+  x = irisdf$Petal.Length,
+  y = irisdf$Petal.Width
+)
+
+# Finding the residuels 
+irisdf$Petal.width - model$fitted.values
+
+newdf = data.frame(Petal.length=c(1,2,3,4,4,5,6,7,7,8,0,10))
+predict(
+	object = model,
+	newdata = newdf )
