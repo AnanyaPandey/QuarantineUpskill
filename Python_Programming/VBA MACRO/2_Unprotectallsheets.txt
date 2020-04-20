@@ -1,0 +1,6 @@
+sub Unprotectallsheets()
+dim i as byte
+for i = 1 to worksheets.count
+	worksheets(i).Unprotect
+Next
+End Sub

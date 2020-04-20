@@ -93,7 +93,7 @@ class aircraft:
 	def seating_plan(self):
 		return (range(1,self._num_rows+1), "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[: self._num_seats_per_row])
 # returning a tuple with a range of numbers and a range of lettes of seats
-
+# This function is not inside any class. 
 def console_card_printing(passenger, seat, flight_number, aircraft):
     output = f" | Name : {passenger}"          \
              f"   Flight : {flight_number}"    \

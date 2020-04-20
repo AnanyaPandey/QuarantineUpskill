@@ -1,0 +1,45 @@
+import scipy
+import numpy as np
+
+2 possibilities = Binomal
+print(binom.pmf(k=19, n=25, p= 0.65))
+ 
+Question says : what is the prob of this much exact : pmf 
+Question asks what is the prob of two or less : then cdf
+
+k = 2 ; i.e. P(0) + p(1) + p(2)
+print(binom.cdf(k=2,n=20,0.06)
+
+Poisson : 
+from scipy import poisson
+poisson.pmf(x=,mean=)
+
+
+Arrival of cusotomers : is in poisson
+unit of x and mean must be same interval
+
+Q : customers come at 3.2 per 20 mins, what is prob of 5 cusomers / 20 minues.?
+poisson.pmf(5,3.2)
+
+Q : same question, what is prob of more than 7 cystomers every 20 minutes?
+1 - p ( upto 7 ) = more than 7 
+
+print(1 - poisson.cdf(7,3.2))
+
+Q What is the prob of 10 customers per 40 minutes ?
+unit of x and mean changed
+
+poisson(10,3.2*2)
+
+======================================================
+Uniform distribution 
+
+Q time takes to assemble a module is 27 to 39  minutes 
+What is prob what it takes 30 to 36 minutes
+
+u = np.arange(27,39)
+from scipy import uniform
+uniform.mean(loc=27,scale=12) # scale is range (interval)
+
+uniform.cdf(np.arange(30,37,1), loc=27, scale=12)
+# this will return prob for each value 30, 31, 32, 33, 34, 35,36

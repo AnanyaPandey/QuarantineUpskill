@@ -1,0 +1,69 @@
+Debugging ! 
+==========================
+
+1. Local Window - can see value of each variable and their values changing 
+2. Setting break points 
+	specially good for large macros 
+	Maroon background !!!! white text !!! - F9 toggle breakpoints
+	
+3. CTRL+G Immediate window
+	let us type code and test logic assignments 
+	Being on that break point we can run commands and check values of variables 
+	?variable [ENTER]
+	shows value of variable
+	
+	debug.print cells(i,i).value
+4. Debug -> Add Watch 
+	# give variable details.
+	# Watch expression.
+	# Break when value changes.
+	# --- possible to add multiple watches
+	
+== ON ERROR RESUME NEXT ======= Before initialization of variables
+
+Say - Spelling of the sheet is changed
+iits more like if error function - not a real error but still can carry on type
+
+== Creating Error Handlers =======
+
+On Error goto Errorhandler - like turning on he error handler
+
+Before End Sun -- > Errorhandler: 
+					Msgbox "This error message"
+					
+					
+After initializing Errrorhandler 
+we need to create breaks and if error happend on that break we can display specific error message 
+
+
+=== Handling multiple Error Handlers ======
+
+On Error goto ChangedSheetName ' Before sheet update 
+On Error goto 0 ' Siabling error handler 
+
+On Error goto MismatchedItem ' Before variable Assignment
+On Error goto 0 ' disabling error handler " after all variables initialized
+
+
+Exit sub
+ChangedSheetName:
+	Msgbox " Sheet Name incorrect "
+
+Exit Sub
+MismatchedItem:
+	Msgbox " Some Mismatch Error "
+	
+	
+ErrorHandler:
+	if Err.Number = x Then
+		Msgbox "This error "
+	
+	
+======== Anticipating the Error ================
+
+if isnumeric(cells(i,3).value)) Then
+	Do This
+End if 
+
+'isblank
+'isnumeric
