@@ -1,14 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 14 15:21:07 2020
 
+@author: pandey
+"""
 
 class Flight:
-
-	def __init__(self,number):
-		if not number[:2].isalpha():
-			raise ValueError(f"No Airline Code in {number}")
-		if not number[:2].isupper():
-			raise ValueError(f"No Airline Code is in upper Case : {number}")
-		if not number[2:].isdigit() and int(number[2:])	<= 9999:
-			raise ValueError(f"Invalid Route Number, should be 4 dinits {number}")
+	def __init__(Self,number):
 		self._number = number 
 
 # by python convention, implementation details start with _ undescore
@@ -20,9 +18,22 @@ class Flight:
 		return self._number
 
 	def airline(self):
-		# first two difits are airline code. 
-		return self._number[:2]
+		return self._number[:2] # returning first 2 digit as code of Airline
 
-# 	if there are no initialiser this function must be used. 
-# 	def number(self):
-#		return "6E-1406"
+class Aircraft:
+	def __init__(self, registration, model, num_rows, num_seats_per_row):
+		self._registration = registration
+		self._model = model
+		self._num_rows = num_rows
+		self._num_seats_per_row = num_seats_per_row
+
+	def registration(self):
+		return self._registration
+
+	def model(self):
+		return self._model
+
+	def seating_plan(self):
+		return (range(1,self._num_rows+1), "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[: self._num_seats_per_row])
+		# returning a tuple with a range of numbers and a range of lettes of seats
+
