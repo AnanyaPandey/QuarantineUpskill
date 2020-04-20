@@ -1,0 +1,111 @@
+EXCEPTIONS
+
+Control Flow 
+Catching exceptions
+Rasing Exceptions
+Unhandled exceptions
+Built in exceptions
+Programmer v/s user errors
+Resource clean up
+
+Interruption of the normal flow - exception
+############ 1. Raising an exception ################
+Control flow transfers to the exceptions
+
+# There is already an endless debate on what is exception and what is not. 
+# Python is at the liberal end of the spectrum when exception is considered.
+
+Programmers Error 
+-------------------
+Indentation Error
+Syntax Error
+Name Error 
+
+Raising Exception
+====================
+Do Not ignore any error.
+raise - keyord re raises the exception.
+
+
+You need to know or understand which exceptions to expect during what type of operations
+# Sequence should raise IndexError for Out of bounds indexing
+# exceptions must be implemented and documented properly
+# existing and built in exceptions are right ones to use
+
+######## Common Exception Types ##########
+
+IndexError
+Integer index out of range 
+z = [1,2,4] ; z[5] = IndexError
+
+
+ValueError
+If correct type but has inappropriate value
+like sqrt(-1)
+
+KeyError : searching through key which doesnt exist
+codes = dict(a='1',b=2)
+codes['d']
+
+Avoid checking for TypeError : Becausse it increases Reusability
+
+EAFP
+It's easier to ask for forgiveness rather than Permission
+
+LBYL --- > Look Before You Leave
+# Prepare for failure. 
+# check preconditions and prepare for consequences
+
+Example : File Processing
+
+According to EAFP when you are reading a file fro path 
+First thing is to chek the path but there can be multiplt things wrong with path.
+
+so instead of just checking if path exist we use 
+
+p = os.path(p)
+if OSError : print ("Error")
+
+
+E.g.
+except OSError as e:
+	print(e, file=sys.stderr)
+	raise
+
+######################### Finally #############################
+try:
+
+except:
+
+finally: 
+# Executed no matter how try block terminates
+
+
+################################################################
+Platform specific code 
+e.g. to detect the key pressed. 
+
+windows : msvcrt 
+Linux : tty, termios, and sys modules
+
+
+import msvcrt
+
+try:
+	def getkey():
+		return msvcrt.getch()
+except ImportError:
+	import sys
+	import tty
+	import termios
+
+	def getkey():
+		fd=sys.stdin.fileno()
+		original_attribute = termios.tcgetattr(fd)
+		try:
+			tty.setraw(sys.stdin.fileno())
+			ch=sys.stdin.read(1)
+		finally:
+			termios.tcsetattr(fd, termios.TCSADRAIN, original_attribute)
+		return ch
+

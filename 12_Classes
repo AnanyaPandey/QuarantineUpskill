@@ -1,0 +1,89 @@
+p.Classes 
+
+Class and Objects
+Those available in python is sufficient but sometime we need custom classes
+Define new Classes
+Instance Method
+Adding to class
+Self Argument
+Establsh enforce variants
+Decompose Problems sing clases
+Combine with object oriented design 
+Everything is object
+Inheritence basics
+
+####################################### Types and Classes ############################################
+
+type(22)
+<class 'int'>
+
+The type of anything is a class in python.
+Classes define the structure and behaviour of objects
+Also they act as template for new objects of the same class
+Class controls objects initial state attributes etc. 
+IT makes complex problems more tactable. It is highly object oriented 
+
+########################3 define Class ###############################
+Class can be created by 
+
+class ClassName:
+# in practice programmmers use CamelCase
+# Airtravel.py
+class Flight:
+	pass
+
+>>> from Airtravel import Flight
+<class 'Airtravel.Flight'>
+
+f1 = Flight() # we just created a new flight f. f is an object of class Flight. 
+
+
+e,g, : airtravel.py
+class Flight:
+	def number(self):
+		return "SN060"
+
+Instance MEthods are functions which can be called on objects and Instance must accept a reference to the actual method on which it is called, Therefore it must accept ad argument called Self
+
+>>> from airtravel import Flight
+>>> f1 = Flight()
+>>> f1.number()
+'SN060'
+
+The proof of instance methods is that we need not pass any arguments
+Another method :
+
+Now that f1 has been run once it can be run as below
+>>> Flight.number(f1)
+'SN060'
+
+# because of the self argument the object got he value asigned.
+
+############################################## Instance Initializers #################################################
+
+The above class isnt much useful since it has only one flight, we need to make flight configurable
+So we need instance initializers to do the job.
+
+We need to crete initialization method. 
+__init__() instance method to initialize new objects 
+
+class Flight:
+	def __init__(Self,number):
+		self._number = number 
+
+# by python convention, implementation details start with _ undescore
+# _number is used to avoid name class with function name
+# initializer must not return anything 	
+# self is analogous to 'this' in java or C++
+
+	def number(self):
+		return self._number
+
+ _number is used for below reasons
+ 1. avoid name clash
+ 2. by convension implementation details start with _
+
+
+Lets modify to check if the initializer is doing right initialization.
+First 2 digits must be Alphanumeric
+
