@@ -1,0 +1,214 @@
+############ Collection Types ###########
+
+Range
+Enumerte
+List Ngative Indices 
+
+######### Range #############
+sequence representing arithmetic proogression of integers 
+
+range(5) = range(0,5)
+0,1,2,3,4
+
+list(range(5,10))
+[5,3,7,8,9]
+
+range(0,10,2)
+Range of Zero to Nine By Twos.
+0,2,4,6,8
+
+range(star,stop,step)
+
+UNPYTHONIC 
+s = [1,2,4,6,6,7,8,10]
+for i in range(len(s)):
+	print(i)
+
+BETTER!
+for i in s:
+	print(i)
+
+######## Enumerate #########
+constructs an iterable of (indx,value) tuples around another iterable object
+returns iteratable pairs
+
+t = [1,4,2,6,7,3,8]
+for x in enumerate(t):
+	print(x)
+(0, 1)
+(1, 4)
+(2, 2)
+(3, 6)
+(4, 7)
+(5, 3)
+(6, 8)
+
+# We can use tuple unpacking to not deal with a tuples
+for i,v in enumerate(t):
+	print(f"i={i}, v = {v}")
+
+i=0, v = 1
+i=1, v = 4
+i=2, v = 2
+i=3, v = 6
+i=4, v = 7
+i=5, v = 3
+i=6, v = 8
+
+
+######### List ###########
+Ngative Indices 
+
+lis1 = [1,2,3,6,7,4,2,7,11,2,83,22,3]
+lis1[-1]
+3
+lis[-2]
+22
+lis[-4:-1]
+[2,83,22]
+
+lis1[-4:]
+[2, 83, 22, 3]
+
+$$$$$$$$$$$ List slicing $$$$$$$$$$$
+
+lis1[3:7]
+3rd,4th,5th and 6th
+
+>>> lis1
+[1, 2, 3, 6, 7, 4, 2, 7, 11, 2, 83, 22, 3]
+>>> lis2 = lis1
+>>> lis2 is lis1
+True
+>>> lis3 = lis1[:]
+>>> lis3 is lis1
+False
+
+lis4 = lis1.copy()
+lis5 = list(lis1)
+# other ways to create new list with only those values and not the object.
+
+Elements within list 
+a = [[0,1],[2,3]]
+b = a[:]
+b is a
+False
+a[0] is b[0]
+True 
+
+c = [1,4]
+c * 4
+[1, 4, 1, 4, 1, 4, 1, 4]
+
+List initialization useful
+emptylist = [0] * 10
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+>>> s= [[-1,+2]] * 5
+>>> s
+[[-1, 2], [-1, 2], [-1, 2], [-1, 2], [-1, 2]]
+>>> s.append(1)
+>>> s
+[[-1, 2], [-1, 2], [-1, 2], [-1, 2], [-1, 2], 1]
+
+s[2].append(5)
+>>> s
+[[-1, 2, 5], [-1, 2, 5], [-1, 2, 5], [-1, 2, 5], [-1, 2, 5], 1]
+
+Each sublist is same object
+
+############# Del ##############
+deletes the element from litt by index
+
+del list1(index)
+remove list('item_value')
+del list1[list1.index('item_value')]
+
+########### insert into index ##############
+
+string.insert(index)
+list1.reverse()
+list1.sort()
+
+d.sort(reverse=True)
+key is the type in which the list can be sorted.
+other than alphabetical or numeric we can have customer sorting whith keys
+
+h = " This string is not properly arranged, although i am really typing it.".split()
+h.sort(key=len)
+# sorts as per length of each word
+
+reversed()
+sorted()
+
+a = [1,2,3,4]
+b = reversed(a)
+b
+<list_reverseiterator object at 0x000002ED906BB308>
+b = list(reversed(a))
+b is a 
+False
+key = any function
+
+
+###################### Dictionary #######################
+Dictionary itself is mutable and we can add new items
+keys must be immutable 
+so tuples, strings, integers are ok but lists NOT!!
+
+Values : May be mutable 
+# DO not rely on the order of dictionary
+
+nandval = [('alice',32),('bob',11)]
+dic1 =dict(nandval)
+dicr2 = dict(a='alga',b='boba',b='choda')
+
+copying e = dict1.copy()
+e = dict(dict1)
+
+############### dict update() $$$$$$$$$$$$$$$$$$$$$
+ Add entries frmo one dictionary to another 
+
+dicta = dict(a='golden',b='labrador',c='rotviller')
+dictb = dict(d='doberman',e='elsessian',a='husky')
+
+dicta.update(dictb)
+{'a': 'husky', 'b': 'labrador', 'c': 'rotviller', 'd': 'doberman', 'e': 'elsessian'}
+
+$$$$$$$ Iterable dictionaries $$$$$$$$$$$$
+values can be pulled out by []
+
+for key in dicta:
+	print(f"Key {key} => Dog :{dicta[key]}")
+Key a => Dog :husky
+Key b => Dog :labrador
+Key c => Dog :rotviller
+Key d => Dog :doberman
+Key e => Dog :elsessian
+
+for val in dicta.values():
+	print(val)
+
+for val in dicta.keys():
+	print(val)
+
+dict.items() =: returns the tuple
+for key,value in dicta.items():
+	print(f' {key} and {value}')
+
+############## in Operator #################
+Operations all happen in keys
+
+'a' in dicta
+True
+
+'b' not in dicta
+False
+
+del dicta['d']
+
+$$$$$$$$$$$$$$$$ Pretty Printing $$$$$$$$$$$$$$$$$$$$
+
+import pprint from pprint as pp
+#as is important bcoz of same name 
+pp(dicta)
