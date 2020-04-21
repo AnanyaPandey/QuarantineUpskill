@@ -1,0 +1,142 @@
+File IO and Resource Management 
+
+# Files are just one example of resources.
+# Elements must be closed after use
+# Python provides syntax or managing resources
+
+Text v/s Binary
+Rd RW files
+Context Managers
+With Keyword
+With Blocks
+Working with binary file format
+File like objects
+Creating context managers.
+
+################################ open() ####################
+# Files are stored as binary in python
+# Text encoded to turn into Binary then again decoded into normal readable text.
+# write() --> Encode to Binary
+# read() --> Decode from Binary to Normal Text
+
+import sys
+sys.getdefaultencoding()
+'utf-8'
+
+########### Writing ############
+# mode can be read write etc
+# wt = write text
+# r = read, w = write, a = append b = binary t = text
+f = open('filename.txt', mode='wt', enocding = 'utf-8') 
+f.write("Hello World")
+f.close()
+
+#### in widows a file might take an extra byte for native ending \n
+#### so if in linux the file size is 78 bytes in windows it will be 79 bytes
+#### numbers retuned by write is the no of codepoints or characters
+
+
+f = open('filename.txt', mode='rt', enocding = 'utf-8')
+f.read(32) # number of characters to read NOT no of bytes
+f.read() # read entire file 
+
+f.seek(0) # to move the pointer tback to the begining of the file. so it will be able to read it.
+# we cannot move it to any arbitary position, it can take either ZERO (0) or any value returned by tell()
+
+# Reading line by line
+f.readline()
+" wro4hp4u53[5u345 35u3453 5345iu434p5i"
+
+# further if we again execute f.readline()
+# returns empty string
+# List of lines f = list(f.readline())
+
+h = open('filename.txt', mode='at', enocding = 'utf-8')
+h.writelines(
+	["Son of dsfsnkjdfnds \n", 
+	"Some Other Line",
+	"Another line mentioned here ",
+	"Last Line"])
+
+h.close()
+
+########## File Iteration ###########
+file object support iteration
+it can be used in lops of anywhere iterators can be used
+
+import sys
+f = open(sys.argv[1], mode='rt', encoding='utf-8')
+for line in f:
+	print(line)
+f.close()
+
+# Print Add Extra lines so we use sys.stdout.write()
+
+############ File Usage Pattern. ################
+f =open()
+# work with file
+f.close() # this tells the underlying OS that we are done with the file and make changes.
+# NOT CLOSING FILE MAY CAUSE TO LOOSE DATA 
+
+# MECHANISM TO CLOSE ALWAYS even if we forget.
+# this can be done through a control flow structure called with.
+# ALso called context managers in python
+
+With-Block
+Can be used with any object in cluding file objects
+
+with EXPR as VAR:
+	BLOCK
+
+
+### Handling Binary Files ###
+bmp : device independnet bitmaps 
+# BMP file writer
+
+
+# Bitwise operator 
+
+def _int32_to_bytes(i):
+#	convert integer to four bytes in LE format 
+
+&  : Bitwise AND
+>> : Bitwise RIGHT SHIFT 
+
+############### File like objects ###################
+
+objects that behave like files
+ a semi formal protocol
+
+ # If an object looks like a file and readsl ike a file then it is a fIle.
+ # Text mode
+ # Binary mode 
+ # URL readers
+
+ #### Counting no of words per line and returning as list ####
+ def wordsperline(flo):
+ 	return [len(line.split()) for line in flo.readlines()]
+
+ with open('fiename.txt', mode='rt', encoding='utf-8') as real_file:
+ 	wpl = wordsperline(real_file)
+
+type(real_file)
+TextIO.Wrapper
+
+ from urlib.request import urlopen
+ with urlopen("http://sixty-north.com/c/t.txt") as web_file:
+ 	wpl = wordsperline(web_file)
+
+type(web_file)
+http.client.HTTP Response
+
+
+Creating a simple Context MAnager
+
+
+
+
+
+
+
+
+

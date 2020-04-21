@@ -1,0 +1,119 @@
+Data Visualization with R 
+
+visualizing - 1 Categorical variable
+- 1 Numeric variable 
+ - Bi variate - 2 Cateorical Variable  
+ - Bi variate - 2 Numeric VAriable 
+ - Bi varate - Both including. 
+ - moving beyond basics
+
+ ################# Data Viz ###################
+
+ Basic idea is to map the quantities of the data.
+ Amazing pattern recognition capacity of brain and 
+ Any datqa viz starts with a question
+  - Alwaus think what exactly you want to visualize
+  - what data is required 
+
+ 1. Base Graphics
+ 2. Lattics
+ 3. GGPLOT2
+
+ BASE : high level graphics commands mixed with low level graphics commands
+ ## barplot() 
+
+ LATTICE : Based on Trellis  graphics which is originally deviced for statistical analysis. 
+ Good for multivariate 
+ Flexible for non standard means
+ ## barchart()
+
+ggplot2 : Grammer of graphics, developedin 1997
+high level abstractions, aesthetics geoms etc. 
+## ggplot(data, aes = ()) + geom_bar() + ggtitle() + xlab() + ylab()
+
+########### Same Visual using 3 Different Graphics Systems ###############
+
+df = data.frame(name=c('a','b','c'),value=c(2,5,7))
+df
+
+plot(df) # X and y AXIS lablled, Here we are passing Column
+plot(df$name,df$value) # Not Lablled. Here we are passing vectors
+
+# plot(XComponent,Ycomponent)
+
+plot(x = df$name, y = df$value) # Here we are passing vectors
+
+# one vector is string another is numeric
+# therefore only one component is numeric
+
+barplot(
+  names = df$name,
+  height = df$value,
+  col = "skyblue",
+  main = "PLotting heights",
+  xlab = "Name",
+  ylab = "Heights"
+)
+
+?plot  # More help on plotting BASE graphics system
+?barplot
+
+## Producing the same graph in Lattics. 
+install.packages("lattice")
+library(lattice)
+
+dotplot(x=value ~ name, data = df)
+# Lattice uses formula to understand what should be plotted. 
+# This is read as value as a function of name or Y as a function of X
+# Y = f(X)
+
+barchart(x=value ~ name, data = df,
+        main = "Hello Lattice",
+        col="blue",
+        xlab = "Name",
+        ylab = "Height")
+# Bars thin, Fonts Smaller, Border around chart 
+?barchart
+
+###################### GGPLOT2 ####################
+
+install.packages("ggplot2",dependencies = TRUE)
+library(ggplot2); # suppress the output 
+
+ggplot(data = df,
+       aes(x = name, y = value)) +
+  geom_point() # it can be point line bar etc
+
+## adding other attributes
+## using + we can add and chain multiple visual elements / Layers
+
+ggplot(data = df,
+       aes(x = name, y = value)) +
+  geom_bar(
+    stat = "identity",
+    fill = "skyblue") + 
+  ggtitle("Plotting name height ggplot") + 
+  xlab("Name") +
+  ylab("Height")
+# This one has broad bars, light grey background 
+
+??ggplot2
+?geom_bar
+
+# Base is command oriented and detail oriented keep adding details to the plot
+# Observations : ROWS
+# VARIABLES / FEATURES : COLUMNS
+
+# Qualitative - Categorical / Nominal 
+# Quantitateive - Numeric / Measure : Discrete or Continous
+
+# Qualitative : Univariate analysis
+# Qualitative : numeric analysis
+
+# Quantitative : univariate / bi variate / multivariate analysis 
+
+
+
+
+
+
