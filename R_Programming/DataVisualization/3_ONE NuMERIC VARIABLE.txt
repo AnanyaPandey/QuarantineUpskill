@@ -1,0 +1,132 @@
+ONE NuMERIC VARIABLE 
+Quantitative Univariate Analysis 
+
+Base
+Lattice
+ggplot2
+
+1.DOT PLOT 
+how data is distributed along the variable
+
+movies$Runtime..Minutes.
+names(movies)[names(movies)=="Runtime..Minutes."] <- "Runtime"
+# REnaming the column for ease 
+# Runtime is in minutes
+
+each dot represents an observation (a movie), here all observaions overlap each other 
+so we can se a convenient single line with higher to lower density
+
+2. Jitter plot 
+Adds the noise along the y axis so that observations do not overlap each other
+Jitter is like a scatterplot but with single variable, 
+Specially good for large number of discrete numeric values 
+
+3. BOX PLOT 
+box and whisker plot : same single numeric variable can be represented using a box
+telling the quantiles, 1st quartile, median, 3rd and max number.
+It considers 1.5 times lowere and upper of the extremes 
+Good for telling spread, and outliers.
+
+
+4. histogram
+approzimation of distribution by showing data in bins. hieght represent number of obs.
+histogram can be for categorical as well (with numeric it needs binning)
+Histogram can easily tell the skewness of the variable. 
+
+5. DENSITY plot
+density represent shows shape of the distribution like histogram with inifite binning.
+location, spread and shape of data. It is smooth representation as a function
+a prob density function. Entire area inside curve = 1
+
+####################################################### BASE #######################################################
+# DOTPLOT 
+plot(x = movies$Runtime,
+     y = rep(0,nrow(movies)),
+                main = "Distribution",
+                xlab = "Runtime",
+                ylab = "",
+                yaxt = "n",
+                pch = 16,
+                col = rgb(0,0,0,0.3))
+
+# color = black , with transparency = 10% 
+Although we draw the plot like a 2 dimensions it is actually showing a univariate data
+rep(0,1000) # gives 1000 zeros as a vector which exactly is y in our plot.
+
+Adding Jitter to the above plot. Jitter is the noise.
+
+#JITTER PLOT
+plot(x = movies$Runtime,
+     y = jitter(rep(0,nrow(movies))),
+     main = "Distribution of movies",
+     xlab = "Runtime",
+     ylab = "",
+     yaxt = "n",
+     pch = 16,
+     col = rgb(0.0,0.0,0.0,0.5))
+
+# since transparency is 50% 2 observations overlap to show a complete black spot
+
+# BOX PLOT 
+boxplot(x = movies$Runtime,
+        horizontal = TRUE,
+        col = "blue",
+        main = "Boxplot Base, Movie Runtime",
+        xlab = "Movie Runtime",
+        ylab = "")
+
+mean(movies$Runtime)
+median(movies$Runtime)
+
+# HISTOGRAM 
+
+hist(x = movies$Runtime,
+     col="skyblue",
+     breaks=20,
+     main = "Histogram, base, Movie runtime",
+     xlab = "movie runtimes")
+
+# breaks tell hw many observations to bin together
+
+# DENSITY PLOT 
+plot(x = density(movies$Runtime),
+     col = "skyblue",
+     lwd = 3,
+     main = "Density Base, Movie Runtime",
+     xlab = "Movies Runtime")
+
+# PLOTTING ALL 4 plots on same plot 
+# Param
+par(mfrow = c(2,2)) # Two row Two Column 
+
+plot(x = movies$Runtime,
+     y = jitter(rep(0,nrow(movies))),
+     main = "Distribution of movies",
+     xlab = "Runtime",
+     ylab = "",
+     yaxt = "n",
+     pch = 16,
+     col = rgb(0.0,0.0,0.0,0.5))
+
+boxplot(x = movies$Runtime,
+        horizontal = TRUE,
+        col = "blue",
+        main = "Boxplot Base, Movie Runtime",
+        xlab = "Movie Runtime",
+        ylab = "")
+
+hist(x = movies$Runtime,
+     col="skyblue",
+     breaks=20,
+     main = "Histogram, base, Movie runtime",
+     xlab = "movie runtimes")
+
+plot(x = density(movies$Runtime),
+     col = "skyblue",
+     lwd = 3,
+     main = "Density Base, Movie Runtime",
+     xlab = "Movies Runtime")
+
+############################################### LATTICE ####################################################
+
+
