@@ -1,0 +1,109 @@
+# 2 Visualizing ONE CATEGORICAL VARIABLE 
+# Qualitative univariate analysis 
+
+Bar chart
+histogram 
+pie chart 
+
+###### Frequency Bar chart.
+X Axis : variable (Categorical, multiple categories.)
+Y Axis : Quantity 
+
+Frequency of each category in the Categorical variable X, there can be more than 1 caetgories
+# If there are more categories it makes sense to rotate the categories to Y axis.
+
+###### Cleveland Dot Plot
+very good for frequency chart with many number of categories. 
+This plot has a very high data-to-ink ratio. with minimum ink (required to print that plot) we must be able to provide as much information as possible. 
+Thus plot must be easier to read. 
+
+##### Pie chart.
+Part of the whole or proportion. NOT A great tool to mention many categories. 
+When categories are less pie chart may be recommended. 
+
+Questions to ask ?
+  How many movies each category?
+  which proportions of movies have won awards?
+  
+  ############# BASE #########################
+
+df = read.csv("movies.csv")
+head(movies)
+plot(x = movies$Cat1,
+     #horiz = TRUE, 
+     main = "Plotting movies",
+     xlab = "Ratings",
+     ylab = "movies")
+
+# horiz : To make the chart horizontal.
+# Creating a cleveland dot plot for the same data
+
+dotchart(x = table(movies$Cat1),
+     pch=17,
+     horiz = TRUE, 
+     main = "Plotting movies",
+     xlab = "Number of Movies",
+     ylab = "Genre")
+
+)
+
+# Now same in pie chart 
+pie(x = table(movies$Cat2),
+    pch = 16,
+    #clockwise = TRUE,
+    main = "PLotting Movie genre",
+    xlab = "Count of Movies",
+    ylab = "Genres")
+
+
+
+#################### LATTICE ########################
+moviestable <- as.data.frame(table(movies$Cat1))
+moviestable
+library(lattice)
+barchart(x = Freq ~ Var1, data = moviestable,
+         horiz = TRUE,
+         main = "Lattice Plotting Movie Categories",
+         xlab = "Categories")
+
+dotplot(x = Freq ~ Var1, data = moviestable,
+        pch = 19,
+        main = "Lattice Dotplot",
+        xlab = "Frequency",
+        ylab = "Movie Category")
+
+
+histogram(x = ~Freq, data = moviestable,
+          main = "Plotting Lattice Histogram",
+          xlab = "Movies Category")
+
+
+####################### GGPLOT2 ##########################
+
+library(ggplot2)
+
+ggplot(data = movies, aes(x = Cat1)) + 
+  geom_bar() +
+# coord_flip + # To Flip the chart to horizontal direction
+  ggtitle("Count of Categories") + 
+  xlab("Movie Category")
+
+
+## DOT PLOT 
+
+ggplot(data = movies, aes(x = Cat1)) + 
+  geom_point(stat = "count") +
+#  coord_flip + # To Flip the chart to horizontal direction
+  ggtitle("Count of Categories") + 
+  xlab("Movie Category")
+
+## PIE CHART 
+
+ggplot(data = movies, aes(x = "", fill = Cat1)) + 
+  geom_bar() +
+  coord_polar(theta = "y") + 
+  ggtitle("Count of movie Category") + 
+  ylab("Movie Category")
+
+# theta = y says that map eht angle with the y data which is our count of categories of movies
+ 
