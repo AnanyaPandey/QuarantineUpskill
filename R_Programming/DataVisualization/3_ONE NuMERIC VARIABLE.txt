@@ -130,3 +130,175 @@ plot(x = density(movies$Runtime),
 ############################################### LATTICE ####################################################
 
 
+
+# Dotplot 
+library(lattice)
+stripplot(
+  x = ~Runtime,
+  data = movies,
+  main = "Distribution, Dotplot, Lattice",
+  xlab = "Runtime"
+)
+
+# JITTER PLOT 
+stripplot(
+  x = ~Runtime,
+  jitter = TRUE,
+  amount = 0.4,
+  data = movies,
+  main = "Distribution, Dotplot, Lattice",
+  xlab = "Runtime"
+)
+
+# BWplot
+bwplot(
+  x = ~Runtime,
+  data = movies,
+  col = "skyblue",
+  fill = "skyblue",
+  main = "Distribution, boxplot, lattice",
+  xlab = "Runtime"
+)
+
+# histogram 
+
+histogram(
+  x = ~Runtime,
+  data = movies,
+  breaks = 30,
+  col = "skyblue",
+  main = "Distribution, histogram, lattice",
+  xlab = "Movies Runtime")
+
+densityplot(x = ~Runtime,
+            data = movies,
+            col = "skyblue",
+            lwd = 3,
+            main = "Distribution, histogram, lattice",
+            xlab = "Movies Runtime")
+
+# Printing all 4 in one plot 
+
+dott <- dotplot(  x = ~Runtime,
+                  data = movies,
+                  main = "Distribution, Dotplot, Lattice",
+                  xlab = "Runtime")
+boxx <- bwplot(
+  x = ~Runtime,
+  data = movies,
+  col = "skyblue",
+  fill = "skyblue",
+  main = "Distribution, boxplot, lattice",
+  xlab = "Runtime"
+)
+
+histt <- histogram(
+  x = ~Runtime,
+  data = movies,
+  breaks = 30,
+  col = "skyblue",
+  main = "Distribution, histogram, lattice",
+  xlab = "Movies Runtime",
+  scales = list(y = list(draw = FALSE)))
+
+dens <- densityplot(x = ~Runtime,
+            data = movies,
+            col = "skyblue",
+            lwd = 3,
+            main = "Distribution, histogram, lattice",
+            xlab = "Movies Runtime",
+            scales = list(y = list(draw = FALSE)))
+
+print(x = dott, position = c(0,0.75,1,1),
+      more = TRUE)
+print(x = boxx, position = c(0,0.5,1,0.75),
+      more = TRUE)
+print(x = histt, position = c(0,0.25,1,0.50),
+      more = TRUE)
+print(x = dens, position = c(0,0,1,0.25))
+
+# X MIN, Y MIN, X MAX, Y MAX
+# indicating lower left and upper right corner of rectangle 
+
+
+############################################## GGPLOT2 ###########################################
+
+
+library(ggplot2)
+ggplot(data = movies, aes(x = Runtime, stat = "count")) +
+  geom_dotplot(binwidth = 1) +
+  ggtitle("Distribution, dotplot, ggplot") +
+  xlab("Movie Runtime") + 
+  coord_cartesian(ylim = c(0, 0.50))
+
+#VIOLIN STYLE DOTPLOT 
+# Stack direction is center here.
+ggplot(data = movies, aes(x = Runtime, stat = "count")) +
+  geom_dotplot(binwidth = 1, stackdir = "center") + 
+  ggtitle("violin style dotplot, ggplot, movies") +
+  xlab("Movies Runtime")
+
+#BOXPLOT
+# Coordinate flip to show the boxplot horizontally
+ggplot(data = movies, aes(x = Runtime, y=Runtime)) +
+  geom_boxplot() +
+  coord_flip() +
+  ggtitle("Boxplot, ggplot, movies") +
+  ylab("Movies Runtime") +
+  xlab("") +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+# HISTOGRAM
+ggplot(data = movies, aes(x = Runtime)) +
+  geom_histogram(binwidth = 20, fill = "skyblue", col = "black") +
+  ggtitle("Histogram of movies runtime") +
+  xlab("Movies Runtime chart") +
+  ylab("")
+  
+# DENSITY PLOT 
+ggplot(data = movies, aes(x = Runtime)) +
+  geom_density(col = "skyblue", lwd=2) +
+  ggtitle("Histogram of movies runtime") +
+  xlab("Movies Runtime chart") +
+  ylab("")
+
+# Clearing existing plot
+dev.off()
+
+# Allows us to draw in grid in graphics device
+library(grid)
+
+viewport <- viewport(layout = grid.layout(2,2))
+pushViewport(viewport) # in our case it pushes to graphics device
+
+dott <- ggplot(data = movies, aes(x = Runtime, stat = "count")) +
+  geom_dotplot(binwidth = 1, stackdir = "center") + 
+  ggtitle("violin style dotplot, ggplot, movies") +
+  xlab("Movies Runtime")
+
+boxx <- ggplot(data = movies, aes(x = Runtime, y=Runtime)) +
+  geom_boxplot() +
+  coord_flip() +
+  ggtitle("Boxplot, ggplot, movies") +
+  ylab("Movies Runtime") +
+  xlab("") +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+histt <- ggplot(data = movies, aes(x = Runtime)) +
+  geom_histogram(binwidth = 20, fill = "skyblue", col = "black") +
+  ggtitle("Histogram of movies runtime") +
+  xlab("Movies Runtime chart") +
+  ylab("")
+
+denss<- ggplot(data = movies, aes(x = Runtime)) +
+  geom_density(col = "skyblue", lwd=2) +
+  ggtitle("Histogram of movies runtime") +
+  xlab("Movies Runtime chart") +
+  ylab("")
+
+print(x = dott, vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(x = boxx, vp = viewport(layout.pos.row = 1, layout.pos.col = 2))
+print(x = histt, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
+print(x = denss, vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
+
+
