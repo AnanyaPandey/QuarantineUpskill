@@ -1,0 +1,93 @@
+4_Two Categorical Variable 
+Qualitative Bivaraite Analysis 
+========================================
+
+Since there are two categorical variables we will need to create a freq table of these two categories
+1. Joint Frequency
+2. MArginal Frequency ( sum of all those categories is called marginal frequency)
+3. RElative Frequency : the freq may not be sum it can be sum / total i.t. the value between 0 and 1 
+# Basically percentage of total 
+
+## Base Graphics for Bivariate Qualitative Visuzlization 
+
+awards <- table(movies$award, movies$Cat1)
+awards
+ 
+print(awards)
+
+# Bar Chart
+barplot(height = awards, beside = TRUE,
+        main = "Plotting Category and Awards",
+        xlab = "Categories",
+        yab = "Count of movies",
+        legend = c("Award","No Award"),
+        args.legend = list(x = "topright", title = "Awards")
+        )
+
+# Stacked Frequency Bar Chart
+
+barplot(height = awards,
+        main = "Count of movies winning awards ",
+        xlab = "Categories",
+        ylab = "Count of Movies",
+        legend = c("Award","No Award"),
+        args.legend = list(x = "topright", title = "Awards")
+        )
+
+# Creating the proportional bar chart (e.g. 100% Stacked)
+# in order to create we need to create proportions 
+# 2 indicate columns, 1 indicate Rows 
+proportions = apply(awards,2, function(x) {x/sum(x)})
+
+# These proportions are relative to the only onservatoins in awards and not all observations
+
+barplot(height = proportions,
+        main = "proportions, award wining acc to movie categories",
+        ylab = "Proportions",
+        xlab = "Movie Categories",
+        legend = c("Award","No Award"),
+        args.legend = list(x = "topright", title = "Awards", inset=c(-0.2,0))
+        )
+
+# Transposed our data 
+awards <- table(movies$Cat1, movies$award)
+colnames(awards) = c("No", "Yes")
+
+# SPINE PLOT
+spineplot(x = awards,
+          main = "proportion of awards, by Movie Category",
+          xlab = "Movie Categories",
+          ylab = "Awards")
+# Observations with higher number are bigger and others are small
+
+# Mosaic Plot 
+mosaicplot(x = awards,
+          main = "proportion of awards, by Movie Category",
+          xlab = "Movie Categories",
+          ylab = "Awards")
+
+####################################### LATTICE ########################################
+
+####################################### GGPLOT 2 #######################################
+
+library(ggplot2)
+# Bar Chart Side by Side 
+ggplot(data = movies, aes(x = Cat1, fill = award)) +
+  geom_bar(position = "dodge") +
+  ggtitle("ggplot : Bar Char of movie categories with awards") +
+  scale_fill_discrete(labels = c("No Award", "Award")) # Legend
+
+# Stacked Frequency Bar Chart
+ggplot(data = movies, aes(x = Cat1, fill = award)) +
+  geom_bar() +
+  ggtitle("ggplot : Bar Char of movie categories with awards") +
+  scale_fill_discrete(labels = c("No Award", "Award")) # Legend
+
+
+# 100% Stacked Frequency Bar Chart
+ggplot(data = movies, aes(x = Cat1, fill = award)) +
+  geom_bar(position = "fill") +
+  ggtitle("ggplot : Bar Char of movie categories with awards") +
+  scale_fill_discrete(labels = c("No Award", "Award")) # Legend
+
+# GGPLOT DOESNT HAVE SPINE AND MOSAIC PLOT 
