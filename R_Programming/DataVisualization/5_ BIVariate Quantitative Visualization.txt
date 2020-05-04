@@ -1,1 +1,54 @@
 5_ BI Variate Quantitative Visualization
+In Numeric analysis 
+
+both numeric are plots on X and Y called Scatter plot and points are drawn
+# Relationship between 2 variables
+# location and spread 
+# changes in one variable over time 
+# 2D density
+
+Scatterplot
+	Correlation
+	Relation
+	Shape : Clusters
+
+Binned Frequency Heatmap
+	Joint frequency
+	Large Data Sets 
+
+Hexagonal binned freq heatmap
+	Shape
+	Frequency
+
+Contour Plots
+	Topographical maps
+	shape and distribution
+	Joint Density
+
+Level Plots
+	 Coloured Levels
+	 Lower data to ink ratio
+
+Mesh Plots
+	 3D density 
+	 Draped with Mesh
+	 Elevation at any given time 
+
+Surface Plots
+
+Step Chart 
+	Change over Time
+	Constant Values
+
+Line Charts
+	Change over time 
+	Rate of Change 
+
+Area Chart
+	Area 
+	Change over Time 
+	Continous change 
+	Volume/sumation 
+
+################################# BASE ########################################
+

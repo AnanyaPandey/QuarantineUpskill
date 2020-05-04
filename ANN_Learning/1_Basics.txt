@@ -1,0 +1,78 @@
+Deep Learning is the most exciting and powerful branch of Machine Learning. Deep Learning models can be used for a variety of complex tasks:
+
+Artificial Neural Networks for Regression and Classification
+Convolutional Neural Networks for Computer Vision
+Recurrent Neural Networks for Time Series Analysis
+Self Organizing Maps for Feature Extraction
+Deep Boltzmann Machines for Recommendation Systems
+Auto Encoders for Recommendation Systems
+
+
+## Creating Models ## 
+
+Standardizartion : modify such that the mean of these observations is 0 and variance = 1
+Normalization : subtract each obs by minimum and divide by the range  of observations in that (feature) column 
+
+in Neural network : one input layer is usually one observation (inclusing all features)
+@@ Efficient Backprop by Yann LeCun et al.
+
+
+OPutput value can be Continous, It can be Categorical Or Binary (Yes/No)
+Number of input and output variables may be different 
+
+one neural network diagram represent one input (one obs) ; the neuron and the output (for same obs)
+## Synapses are the routes that travel from input layer to the Neuron 
+Each synapse are assigned / have a weights. By adjusting the weights is how a neural network perform the activity predicting of calculation. 
+
+weight decides which signal to give importance ; weights are crucial. so when model is training and learning
+these weights are adjusted. 
+
+## Inside neuron : compute : i.e. all these weights and input nodes gets added up.
+Sum (wx)
+
+2nd Step : Activation function : the function assigned to this neuron or whole layer. 
+This function is applied to weighted sum ; depending on this function the neuron mght pass on the signal further
+
+3rd Step is to pass the signal to next neuron.
+
+## Activation function 
+----------------------
+## Remember the X we mention here is the weighted sum i.e. sum(wx)
+
+Four predominant different type of activation functions
+1. Threshold function : f(X) = 1 if X>=0 ; 0 Otherwise
+2. Sigmoid function : f(X) = 1/ (1+ e^-X) ; It is smooth and gradual progression (very useful in preducting prob for the last layer / ouput variable) 
+3. Rectifier function : f(X) = max (X,0) ; even ifit has the kink, it is useful.
+4. Hyperbolic Tangent : tanh : Similar to the sigmoid function ; but eh values go from -1 to +1 
+f(X) = (1 - e^-2X) / (1 + e^-2X)  
+
+
+MORE :: Deep Sparse rectifier neural network by Xavier Clorot
+
+e.g : In the hidden layer, rectifier activation function is applied and in the output layer, Sigmoid function is applied. 
+
+################### How do Neural Networks Work #####################
+@ A very imp part in neural networks is training the model. First we see the application and then going back. 
+
+A basic NN model will have no hidden layer and any of the functions can be used as the activation function,
+## Intuition : how a hidden layer provides more power to the model :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
