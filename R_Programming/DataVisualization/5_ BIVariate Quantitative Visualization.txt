@@ -52,3 +52,118 @@ Area Chart
 
 ################################# BASE ########################################
 
+
+plot(
+  x = movies$Runlength,
+  y = movies$Revenue,
+  main = "Plotting Bivariate Quantitative",
+  xlab = "Revenue (Millions)",
+  ylab = "Movie LEngth (Minutes)"
+)
+
+model <- lm(movies$Revenue ~ movies$Runlength)
+
+lines(x = movies$Runlength, y = model$fitted,
+      col = "red",
+      lwd = 3)
+
+install.packages("hexbin")
+library(hexbin)
+hexbin <- hexbin(
+  x = movies$Runlength,
+  y = movies$Revenue,
+  xbins = 30,
+  xlab = "Movie Length",
+  ylab = "Revenue"
+)
+
+plot(hexbin, main = "Plotting using Hexbin")
+
+# Preparation for Contour Plot 
+# Creating the density from data 
+install.packages("MASS")
+library(MASS)
+density2d <- kde2d(
+  x = movies$Runlength,
+  y = movies$Revenue,
+  n = 50)
+
+# Creating the Contour Plot 
+contour(
+  x = density2d$x,
+  y = density2d$y,
+  z = density2d$z,
+  main = "Plotting Contour",
+  xlab = "Movies Runtime",
+  ylab = "Movies Revenue")
+
+# Creating a Level Plot 
+image(x = density2d$x,
+      y = density2d$y,
+      z = density2d$z)
+
+
+################################# GGPLOT ################################
+
+
+# Ggplot 
+
+library(ggplot2)
+ggplot(data = movies, aes(x = Runlength, y = Revenue)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  ggtitle("Plotting revenue and length ggplot") + 
+  xlab("Movie Length (monites)") + 
+  ylab("Movie Revenue (Milion Dollars)")
+
+# Plotting (RECTANGULAR) frequencey heatmap 
+ggplot(data = movies, aes(x = Runlength, y = Revenue)) + 
+  stat_bin2d() + 
+  ggtitle("Plotting revenue and length ggplot") + 
+  xlab("Movie Length (monites)") + 
+  ylab("Movie Revenue (Milion Dollars)")
+
+# Plotting (hexagonal) frequencey heatmap 
+
+ggplot(data = movies, aes(x = Runlength, y = Revenue)) + 
+  stat_bin_hex() + 
+  ggtitle("Plotting revenue and length ggplot") + 
+  xlab("Movie Length (minutes)") + 
+  ylab("Movie Revenue (Milion Dollars)")
+
+
+# Creating contour plot of density 
+ggplot(data = movies, aes(x = Runlength, y = Revenue)) + 
+  geom_density2d() + 
+  ggtitle("Plotting revenue and length ggplot") + 
+  xlab("Movie Length (minutes)") + 
+  ylab("Movie Revenue (Milion Dollars)")
+
+# Creating a level plot
+ggplot(data = movies, aes(x = Runlength, y = Revenue)) + 
+  stat_density2d(aes(fill= ..level..), geom = "polygon") + 
+  ggtitle("Plotting revenue and length ggplot") + 
+  xlab("Movie Length (minutes)") + 
+  ylab("Movie Revenue (Milion Dollars)")
+
+# ..variable.. is a special variable calculated by the density2d statistic
+# 3D visualization is not there in ggplot2 
+# Surface or mesh not available in ggplot2 
+
+# Plotting the time series data 
+times <- read.csv("timeseries.csv")
+
+ggplot(data = times, aes(x = sunspots, y = Month)) + 
+  geom_step() + 
+ #  expand_limits(y = 0) + 
+  ggtitle("Plotting revenue and length ggplot") + 
+  xlab("Movie Length (minutes)") + 
+  ylab("Movie Revenue (Milion Dollars)")
+
+# Area Plot 
+ggplot(data = times, aes(x = sunspots, y = Month)) + 
+  geom_area() + 
+  ggtitle("Plotting revenue and length ggplot") + 
+  xlab("Movie Length (minutes)") + 
+  ylab("Movie Revenue (Milion Dollars)")
+
