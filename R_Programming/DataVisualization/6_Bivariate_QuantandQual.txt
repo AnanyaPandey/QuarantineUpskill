@@ -1,0 +1,72 @@
+
+Visualizing categorical and numeric variable 
+Bivariate Qualitative and quantitative analysis 
+
+
+# in Bivaraite Qualitative and Quantitative analysis
+# Instead of frequency we wil plot a numeric variable 
+
+# Theere has to be an aggregate value of numeric variable 
+# this is grouped, aggregated(sum) and Comparison 
+
+# Bivariate bar chart; Bivariate boxplot 
+# Bivariate violin plot 
+
+# Calculating the aggregate for the analysis. 
+aberage <- tapply(movies$Revenue, movies$Cat1, mean, na.rm = TRUE)
+aberage
+
+barplot(height = aberage,
+        main = "Plotting Average Revenue by each category",
+        xlab = "Movie Categories",
+        ylab = "Revenue")
+
+# Bi variate Box plot 
+plot(x = movies$Cat1,
+     y = movies$Revenue,
+     main = "Plotting Average Revenue by each category",
+     xlab = "Movie Categories",
+     ylab = "Revenue")
+
+# Bi variate notch Box plot 
+plot(x = movies$Cat1,
+     y = movies$Revenue,
+     notch = TRUE, 
+     main = "Plotting Average Revenue by each category",
+     xlab = "Movie Categories",
+     ylab = "Revenue")
+
+
+####################### GGPLOT2 ##########################
+
+# Preparing the data for ggplot 2 
+library(dplyr)
+aberage <- movies %>% select(Cat1, Revenue) %>% group_by(Cat1) %>% 
+  summarize(mRevenue = mean(Revenue, na.rm = TRUE)) %>% as.data.frame()
+
+ggplot(data = aberage, aes(x = Cat1, y = mRevenue)) + 
+  geom_bar(stat = "identity") +
+  ggtitle("Plotting Revenue aggregated per category") +
+  xlab("Movie Categories") +
+  ylab("Revenue in Million Dollars")
+
+# Creating a Boxplot
+
+ggplot(data = movies, aes(x = Cat1, y = Revenue)) + 
+  geom_boxplot(notch = TRUE) +
+  ggtitle("Plotting Revenue aggregated per category") +
+  xlab("Movie Categories") +
+  ylab("Revenue in Million Dollars")
+
+
+# Creating Violin PLot 
+ggplot(data = movies, aes(x = Cat1, y = Revenue)) + 
+  geom_violin() +
+  ggtitle("Plotting Revenue aggregated per category") +
+  xlab("Movie Categories") +
+  ylab("Revenue in Million Dollars")
+
+
+
+
+
