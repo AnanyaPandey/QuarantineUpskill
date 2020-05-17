@@ -1,1 +1,155 @@
 2_qualitative Multivariate analysis
+Whenever categorical variables are in picture we need to consider the frequency of categories. 
+our surface is 2D hence we need some taabular technique to represent the three variables. 
+
+3-way contingency table is one of those. 
+We can create multiple tables based out of 3rd categorical variable and represent the remaining two variable in the form of table
+
+Faceted frequency batchart -----
+We can used Faceted frequency batchart for representing categorical variable. 
+EAch facet will represent one category of a variable. and within each facet there will be frequency graph 
+
+
+Faceted stacked frequency batchart ------
+this is same barchart just stacked and same bar is different coloured representing category
+
+Faceted frewuency barchart -------
+we can have the barcharts stacked by the cateogory of one /. twi variable across rows and columns.
+
+#################### BASE PLOT #######################
+
+
+# Trivariate Qualitative analysis 
+# 3 Categorical variable visualozation
+
+# Setting directory and data
+setwd("/Users/ananyapa/Gdrive/LEARNING/R_Programming/multivariate-dataviz")
+movies <- read.csv("m2/Movies.csv")
+
+# if we are trying to visualize 3 categorical variable we have to take and represent the frequency in the table
+# we need to create three way contingency table 
+
+gettable <- function(distCategory){
+  filter <- movies$Distribution == distCategory
+  # 3rd variable is passed through the argument : distribution
+  # first and 2nd variable are Movie Rating and Awards
+  # Distribution of movie tells whether its domestic or international
+  subset <- movies[filter,] # all those filtered movies that match
+  table(x =subset$Awards, y = subset$Rating) # awards x axis, rating on y axis
+}
+
+# Displaying contingency tables 
+gettable("Domestic")
+gettable("International")
+
+# Hotizontal facet 
+par(mfrow = c(1,2)) # 1 row 2 column
+barplot(height = gettable("Domestic"),
+        beside = TRUE,
+        ylim = c(0,600),
+        main = "Domestic",
+        xlab = "Movie Rating",
+        ylab = "Count of Movies")
+
+barplot(height = gettable("International"),
+        beside = TRUE,
+        ylim = c(0,600),
+        main = "International",
+        xlab = "Movie Rating",
+        ylab = "Movie Count",
+        legend = rownames(gettable("International")))
+
+# Stacked ferquency plot 
+barplot(height = gettable("Domestic"),
+        beside = FALSE,
+        ylim = c(0,1000),
+        main = "Domestic",
+        xlab = "Movie Rating",
+        ylab = "Count of Movies")
+
+barplot(height = gettable("International"),
+        beside = FALSE,
+        ylim = c(0,1000),
+        main = "International",
+        xlab = "Movie Rating",
+        ylab = "Movie Count",
+        legend = rownames(gettable("International")))
+
+## Now create a function to create frequency table :
+
+gettable2 <- function(awards,distribution){
+  filter <- movies$Distribution == distribution & movies$Awards == awards
+  # Both condition must satisfy
+  subset <- movies[filter,]
+  table(subset$Rating)
+}
+
+# awards have 2 categories
+# Distribution has 2 categories 
+# Sototal there will be 4 tables
+
+# Frequency distribution of movie Rating according ot variables
+gettable2("No Awards","Domestic")
+gettable2("No Awards","International")
+gettable2("Won Awards","Domestic")
+gettable2("Won Awards","International")
+
+par(mfrow = c(2,2))
+
+makebarplot <- function(award,dist,name){
+  barplot(height = gettable2(award, dist),
+          ylim = c(0,600),
+          main = name,
+          ylab = "Count of Movies",
+          xlab = "Movie Rating")
+}
+
+makebarplot("No Awards","Domestic","No Award Domestic")
+makebarplot("Won Awards","Domestic","Won Award Domestic")
+makebarplot("No Awards","International","No Award International")
+makebarplot("Won Awards","International","No Award Internatioaal")
+
+# EACH barplot represent single variable :
+# we can introduce one more variable here and mention BESIDE argument 
+
+# Resetting mfrow
+par(mfrow = c(1,1))
+
+############################## GGPLOT ############################
+
+# Creating a 3 way contingency table 
+setwd("/Users/ananyapa/Gdrive/LEARNING/R_Programming/multivariate-dataviz")
+movies <- read.csv("m2/Movies.csv")
+
+movietable <- movies %>% 
+  select(Rating,Awards,Distribution) %>%
+  group_by(Rating,Awards,Distribution) %>%
+  summarize(Count=n())
+
+# ggplot is self sufficient and do not need the data to be grouped 
+library(ggplot2)
+ggplot(data = movies, aes(x = Rating, fill = Awards )) +
+  geom_bar(position = "dodge") + # Creating grouped bar chart
+  facet_wrap(facets = ~Distribution) +
+  ggtitle("Plotting Count of movies Rating per distribution") +
+  xlab("Movie Rating") +
+  ylab("Count of Movies")
+
+# Creating a stacked frequency bar chart 
+ggplot(data = movies, aes(x = Rating, fill = Awards )) +
+  geom_bar() + # Creating grouped bar chart
+  facet_wrap(facets = ~Distribution) +
+  ggtitle("Plotting Count of movies Rating per distribution") +
+  xlab("Movie Rating") +
+  ylab("Count of Movies")
+
+# 2D faceted Frequency Bar chart 
+ggplot(data = movies, aes(x = Rating)) +
+  geom_bar(fill="skyblue") + # Creating grouped bar chart
+  facet_grid(facets = Awards ~ Distribution) +
+  ggtitle("Plotting Count of movies Rating per distribution") +
+  xlab("Movie Rating") +
+  ylab("Count of Movies")
+  
+
+  
