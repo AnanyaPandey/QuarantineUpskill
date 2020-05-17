@@ -1,0 +1,109 @@
+Multivariate Data Visuzlization Demo
+
+# Multivariable data viz lesson 1 
+################################## BASE GRAPHICS #####################################
+setwd("/Users/ananyapa/Gdrive/LEARNING/R_Programming/multivariate-dataviz")
+m1 <- read.csv("m1/TimeSeries.csv")
+head(m1)
+
+# data has revenues for each year 
+facetplot <- function(index,name) {
+  values <- m1[,c(1,index)]  # subset the data and return all the rows of year and the column
+  ymax <- max(m1$G) # we already know that max revenue from G hence taking G 
+  plot(x = values,
+       type = "l",
+       ylim = c(0,ymax),
+       main = name,
+       xlab = "Year",
+       ylab = "Box office revenue")
+}
+# keeping y limit same for all charts will make it consistent 
+# therefore take a value which is max among all columns
+
+# Creating horizontal facets
+par(mfrow = c(1,4)) # with 1 row and 4 columns, all charts in a line 
+facetplot(2, "Guardian - G")
+facetplot(3, "ParentG - PG")
+facetplot(4, "Teenage - PG13")
+facetplot(5, "Restricted - R")
+
+# Creating Vertical phot
+par(mfrow = c(4,1)) # with 1 row and 4 columns, all charts in a line 
+facetplot(2, "Guardian - G")
+facetplot(3, "ParentG - PG")
+facetplot(4, "Teenage - PG13")
+facetplot(5, "Restricted - R")
+
+
+################################## GGPLOT 2  #####################################
+
+
+setwd("/Users/ananyapa/Gdrive/LEARNING/R_Programming/multivariate-dataviz")
+m2 <- read.csv("m1/TimeSeries2.csv")
+m2
+library(ggplot2)
+
+# Creating a horizontal plot 
+ggplot(
+  data = m2,aes(x = Year,y = Box.Office)) +
+  geom_line() +
+  facet_grid(facets = .~Rating) + 
+  ggtitle("Plotting movie revenue as per ratings") + 
+  xlab("Movie Rating") +
+  ylab("Revenue")
+
+# for Facetgrid # formula is Rows ~ Columns
+# Which variables should be faceted on rows and which on columns
+# DOT . tells that there should be no facetting on specified dimension
+# So .~RAting means we want to facet by single variable Rating and we want it horizontally
+# i.e. on Columns (Facetting on columns)  ROWS ~ COLUMNS
+
+# Creating Vertical Plotts 
+ggplot(
+  data = m2,aes(x = Year,y = Box.Office)) +
+  geom_line() +
+  facet_grid(facets = Rating~.) + 
+  ggtitle("Plotting movie revenue as per ratings") + 
+  xlab("Movie Rating") +
+  ylab("Revenue")
+
+# Now Creating Wrapped Facets
+ggplot(
+  data = m2,aes(x = Year,y = Box.Office)) +
+  geom_line() +
+  facet_wrap(facets = ~Rating) + 
+  ggtitle("Plotting movie revenue as per ratings") + 
+  xlab("Movie Rating") +
+  ylab("Revenue")
+# MAke it acc to columns but make it rows if its too wide.
+# Facetwrap is one sided so we cant have anything on left side of ~ in WRAP
+# in GGPLOT2 each category in categorical variable can be used to make a facet of plots.
+
+# Creating a 2D facet chart horizontal 
+# Here we re considering 2 Categorical variable, Awards and Rating
+# Box Office tells the revenue in million dollars 
+
+m3 <- read.csv("m1/TimeSeries3.csv")
+ggplot(data = m3,aes(x = Year,y = Box.Office)) + geom_line() +
+  facet_grid(facets = Awards~Rating) +
+  ggtitle("Plotting 2D facet with ggplot") +
+  xlab("Movie Category") +
+  ylab("Awards won ?")
+# Rows are awards  and columns are movie category(Rating)
+
+# Creating 2D vertical chart
+ggplot(data = m3,aes(x = Year,y = Box.Office)) + geom_line() +
+  facet_grid(facets = Rating~Awards) +
+  ggtitle("Plotting 2D facet with ggplot") +
+  ylab("Movie Category") +
+  xlab("Awards won ?")
+  
+
+########################################
+
+Types : 
+all 3 Qualitative trivariate analysis 
+2 Qual 1 Quant trivariate analysis
+1 Qual 2 Quant trivariate analysis
+All 3 Quantitative trivariate anaysis
+

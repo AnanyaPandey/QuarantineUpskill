@@ -1,0 +1,41 @@
+Part 7 Best practices 
+
+Create clean understandable and detailed data visualization 
+
+plot(x = movies$Rating,
+	main = "Plotting data",
+	xlab = "X axis",
+	ylab = "Y Axis")
+
+# Creating a Color Palette
+install.packages("RColorBrewer")
+library(RColorBrewer)
+
+palette <- brewer.pal(9,"Pastel1")
+# we just created a pallete with 9 colours
+
+
+plot(x = movies$Rating,
+	col = palette[2],
+	border = NA,
+	main = "Plotting data",
+	xlab = "X axis",
+	ylab = "Y Axis")
+
+# Saving the plot as image 
+# Exporting it to a graphics device like png
+
+png(filename = "plotmovierating.png",
+	width = 640,
+	height = 480)
+
+plot(.......)
+
+dev.off()
+
+################### for GGPLOT use ggsave #####################
+
+?barplot
+?par # graphical parameters
+?mfrow
+
