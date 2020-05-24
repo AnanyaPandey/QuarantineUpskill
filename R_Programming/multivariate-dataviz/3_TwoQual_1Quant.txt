@@ -1,0 +1,130 @@
+2 Categorical and 1 Numeric Variable Eploratory Analysis
+
+Basically there is an aggregate of numeric variable which is at the intersection of both the categorical variable.
+we typically use the table in the 2 dimensional format. 
+The aggregagte measure could be max min sum mean etc. 
+
+The table could be row-wise, column wise of tabular # for ggplot we do not need to create a seprate table. 
+
+
+# aggregate of two qualitative and 1 Quantitative variable 
+# numeic variable :: aggregate : sum / count / min / max etc.
+# it could be helpful to create table to represent the data in tabular way 
+
+setwd("/Users/ananyapa/Gdrive/LEARNING/R_Programming/multivariate-dataviz")
+movies <- read.csv("m2/Movies.csv")
+
+#Creating a function to create table rows
+getrow <- function(awards){
+  subs <- movies[movies$Awards == awards,]
+  tapply(subs$Box.Office, subs$Rating, mean)
+}
+
+tabb <- rbind(getrow("No Awards"),getrow("Won Awards"))
+tabb
+
+# Bar Chart Side by Side
+barplot(
+  height = tabb,
+  beside = TRUE,
+  main = "Average Box office rating as per Category",
+  xlab = "Category",
+  ylab = "Averate Movie Revenue",
+  legend = rownames(tabb))
+
+# Stacked Bar Chart 
+barplot(
+  height = tabb,
+  main = "Average Box office rating as per Category",
+  xlab = "Category",
+  ylab = "Averate Movie Revenue",
+  legend = rownames(tabb))
+#The height does not represent the number of movies, it represent the Box office Revenue
+
+#Creating the facetted bar chart 
+# y limit is important to get the comparison in both facets
+par(mfrow = c(1,2))
+barplot(
+  height = getrow("No Awards"),
+  ylim = c(0,100),
+  col ="skyblue",
+  main = "No Awards",
+  xlab = "Movie Category",
+  ylab = "Average Movie Revenue",
+)
+barplot(
+  height = getrow("Won Awards"),
+  ylim = c(0,100),
+  col = "pink",
+  main = "Won Awards",
+  xlab = "Movie Category",
+  ylab = "Average Movie Revenue",
+)
+par(mfrow = c(1,1))
+
+# Creating the Heatmap
+heatmap(x = tabb,
+        col = heat.colors(100),
+        scale = "none",
+        Colv = NA,
+        Rowv = NA,
+        margins = c(6,10),
+        main = "Average Box Office Revenue",
+        cexRow = 2
+        )
+# Rowv and Colv are used to create dendogram
+# scale is to scale the graph with respect to any other variable 
+# cexrow reduce the row font size
+
+
+########################### GGPLOT #################################
+
+
+# Creating hte graph using GGPLOT2
+library(ggplot2)
+setwd("/Users/ananyapa/Gdrive/LEARNING/R_Programming/multivariate-dataviz")
+movies <- read.csv("m2/Movies.csv")
+
+ggplot(data = movies, aes(x = Rating, y = Box.Office, fill = Awards)) +
+  geom_bar(stat = "summary", fun.y = "mean", position = "dodge") +
+  ggtitle("Average movie Box Office of Movie Categories per Awards") +
+  xlab("Movie Ratings") +
+  ylab("Average Box Office Revenue (m$)")
+  
+# By default it uses count as the statistic 
+# position dodge creates a side by side plot 
+
+# Creating Stacked Bar Chart 
+ggplot(data = movies, aes(x = Rating, y = Box.Office, fill = Awards)) +
+  geom_bar(stat = "summary", fun.y = "mean", position = "stack") +
+  ggtitle("Average movie Box Office of Movie Categories per Awards") +
+  xlab("Movie Ratings") +
+  ylab("Average Box Office Revenue (m$)")
+# if we just omit the position attribute it will take as default
+
+
+# Creating the Facetted Bar Chart 
+# Insted of filling it by Awards we will use the Facet parameter
+ggplot(data = movies, aes(x = Rating, y = Box.Office, fill = Awards)) +
+  geom_bar(stat = "summary", fun.y = "mean", position = "stack", aes(color = factor(Rating))) +
+  facet_wrap(facets = ~Awards) +
+  ggtitle("Average movie Box Office of Movie Categories per Awards") +
+  xlab("Movie Ratings") +
+  ylab("Average Box Office Revenue (m$)")
+
+# Fill is used to fill the colour of the bars both awards and no awards are given different colours
+# geom_bar aes colors gives a border colour which can be used in case we want to differntiate each Movie rating categoruy
+
+library(dplyr)
+table2 <- movies %>%
+  select(Rating, Box.Office,Awards) %>%
+  group_by(Rating,Awards) %>%
+  summarize(Box.Office = mean(Box.Office))
+  
+# Creating a Heatmap
+ggplot(data = table2,aes(x = Rating,y=Awards,fill=Box.Office)) +
+  geom_tile(stat = "identity") + 
+  ggtitle("Average movie Box Office of Movie Categories per Awards") +
+  xlab("Movie Ratings") +
+  labs(fill = "Box Office\nRevenue")
+
