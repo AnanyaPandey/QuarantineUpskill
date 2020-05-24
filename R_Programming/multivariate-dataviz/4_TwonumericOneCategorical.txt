@@ -1,0 +1,160 @@
+Two Numeric One Categorical Data Analysis 
+
+1. ######## BASE GRAPHICS ###############
+
+# 1 Qualittive and 1 quantitqative data
+# best way is to compare the numeric values based on each category 
+# Also time series analysis can be performed conditioned by categorical values 
+# one row for each point in time 
+# Shape coded colour coded scatterplot ; Facetted scatter plots 
+# Multi series line chart : time series data ; Stacked area chart 
+# Faceted Line chart : facets for categorical variable 
+setwd("/Users/ananyapa/Gdrive/LEARNING/R_Programming/multivariate-dataviz")
+movies <- read.csv("m2/Movies.csv")
+movies2014 <- movies[movies$Year == 2014,]
+
+library(RColorBrewer)
+display.brewer.all() # To display all color palette
+# There are 3 types of pallatte : Sequetial categorical and extremes
+
+#Creating a color palette
+# Take 4 colours from Set 2 
+colors <- brewer.pal(4,"Set2")
+
+# Creatting a scatterplot 
+plot(
+  x = movies2014$Critic.Score,
+  y = movies2014$Box.Office,
+  col = colors(as.integer(movies2014$Rating)),
+  pch = 19, # Filled colour circles
+  main = "Plotting Revenue and Critic Score wrt Ratings",
+  xlab = "Critic Score",
+  ylab = "Movie Revenue"
+)
+
+legend(
+  x = "topleft",
+  legend = levels(movies2014$Rating),
+  col = colors[1:4],
+  pch = 19
+)
+
+# Creating a shape coded scatterplot 
+
+#First Create the Shapes
+# these are the IDs of the shapes available in R 
+# Each ID represent different Shape
+shapes <- c(1,4,2,7)
+
+plot(
+  x = movies2014$Critic.Score,
+  y = movies2014$Box.Office,
+  pch = shapes[as.integer(movies2014$Rating)],
+  col = "blue",
+  main = "Plotting Revenue and Critic Score wrt Ratings",
+  xlab = "Critic Score",
+  ylab = "Movie Revenue"
+)
+
+# Including shape and color both coded
+plot(
+  x = movies2014$Critic.Score,
+  y = movies2014$Box.Office,
+  pch = shapes[as.integer(movies2014$Rating)],
+  col = colors(as.integer(movies2014$Rating)),
+  main = "Plotting Revenue and Critic Score wrt Ratings",
+  xlab = "Critic Score",
+  ylab = "Movie Revenue"
+)
+legend(
+  x = "topleft",
+  legend = levels(movies2014$Rating),
+  col = colors[1:4],
+  pch = shapes[as.integer(movies2014$Rating)]
+)
+
+# Creating DATA filtered by categories/RAtings
+gmovies <- movies2014[movies2014$Rating == "G",]
+pgmovies <- movies2014[movies2014$Rating == "PG",]
+pg13movies <- movies2014[movies2014$Rating == "PG-13",]
+rmovies <- movies2014[movies2014$Rating == "R",]
+
+par(mfrow = c(2,2))
+plot(
+  x = gmovies$Critic.Score,
+  y = gmovies$Box.Office,
+  pch=19,
+  col = "skyblue",
+  main = "G",
+  xlab = "",
+  ylab = "Movie Revenue"
+)
+plot(
+  x = pgmovies$Critic.Score,
+  y = pgmovies$Box.Office,
+  pch=19,
+  col = "skyblue",
+  main = "PG",
+  xlab = "",
+  ylab = ""
+)
+plot(
+  x = pg13movies$Critic.Score,
+  y = pg13movies$Box.Office,
+  pch=19,
+  col = "skyblue",
+  main = "PG-13",
+  xlab = "Critic Score",
+  ylab = "Movie Revenue"
+)
+plot(
+  x = rmovies$Critic.Score,
+  y = rmovies$Box.Office,
+  pch=19,
+  col = "skyblue",
+  main = "R",
+  xlab = "Critic Score",
+  ylab = ""
+)
+par(mfrow = c(1,1))
+
+
+#Loading the time series Data
+times <- read.csv("m4/TimeSeries.csv")
+
+# first lets create an emply plot,
+plot(x = 0,
+     y = 0,
+     xlim = c(2000,2015),
+     ylim = c(0,max(times$G)),
+     type="l",
+     main = "Plotting Revenue and Critic Score wrt Ratings",
+     xlab = "Critic Score",
+     ylab = "Movie Revenue")
+lines(
+  x = times$Year,
+  y = times$G,
+  col = colors[1]
+)
+lines(
+  x = times$Year,
+  y = times$PG,
+  col = colors[2]
+)
+lines(
+  x = times$Year,
+  y = times$PG13,
+  col = colors[3]
+)
+lines(
+  x = times$Year,
+  y = times$R,
+  col = colors[4]
+)
+
+legend(
+  x = "topleft",
+  legend = c("G","PG","PG-13","R"),
+  col = colors,
+  pch = 19
+)
