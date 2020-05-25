@@ -158,3 +158,114 @@ legend(
   col = colors,
   pch = 19
 )
+
+# Now lets create the facetted line chart in base system 
+
+par(mfrow = c(2,2))
+plot(
+  x = times[,c(1,2)],
+  type = "l",
+  ylim = c(0,max(times$G)),
+  main = "G",
+  xlab = "",
+  ylab = "Box Office Revenue"
+)
+plot(
+  x = times[,c(1,3)],
+  type = "l",
+  ylim = c(0,max(times$G)),
+  main = "PG",
+  xlab = "",
+  ylab = ""
+)
+plot(
+  x = times[,c(1,4)],
+  type = "l",
+  ylim = c(0,max(times$G)),
+  main = "PG-13",
+  xlab = "Years",
+  ylab = "Box Office Revenue"
+)
+plot(
+  x = times[,c(1,5)],
+  type = "l",
+  ylim = c(0,max(times$G)),
+  main = "R",
+  xlab = "Years",
+  ylab = ""
+)
+par(mfrow = c(1,1))
+
+
+######################## GGPLOT 2 #################################
+
+
+# GGPLOT ########
+library(ggplot2)
+ggplot(data = movies2014,aes(x = Critic.Score,y=Box.Office,color=Rating)) +
+  geom_point() +
+  ggtitle("Movie Revenue wirt Critic Score") +
+  xlab("Critic Score") +
+  ylab("Movie Revenue")
+
+# scale color manual to create the color as per category
+# values = colors (that we created out of the set, palette) 
+# In order to give the colours which we have created we have to introduce scaled color manual
+
+ggplot(data = movies2014,aes(x = Critic.Score,y=Box.Office,color=Rating)) +
+  scale_color_manual(name = "Rating", labels = levels(movies2014$Rating), values = colors) +
+  geom_point() +
+  ggtitle("Movie Revenue wirt Critic Score") +
+  xlab("Critic Score") +
+  ylab("Movie Revenue")
+
+# assuming we have already created colors and shapes
+# Ceating the shape coded graph
+# scatterplot shape coded by rating
+ggplot(data = movies2014,aes(x = Critic.Score,y=Box.Office,shape=Rating)) +
+  scale_shape_manual(name = "Rating", labels = levels(movies2014$Rating), values = shapes) +
+  geom_point() +
+  ggtitle("Movie Revenue wirt Critic Score") +
+  xlab("Critic Score") +
+  ylab("Movie Revenue")
+
+# Creating a facetted chart 
+ggplot(data = movies2014,aes(x = Critic.Score,y=Box.Office)) +
+  geom_point() + 
+  facet_wrap(facets = ~Rating) + 
+  ggtitle("Movie Revenue wirt Critic Score") +
+  xlab("Critic Score") +
+  ylab("Movie Revenue")
+
+
+# Now creting the multi series line chart for the time series data 
+# For years 2000 to 2015 
+# creating the row wise tabular representation 
+library(dplyr)
+times2<- movies %>%
+  select(Year,Rating,Box.Office) %>%
+  group_by(Year,Rating) %>%
+  summarize(Box.Office = mean(Box.Office)) %>%
+  as.data.frame()
+
+ggplot(data = times2,aes(x = Year,y=Box.Office, color=Rating)) +
+  geom_line() +
+  ggtitle("Movie Revenue per Category Throughout") +
+  xlab("Years") +
+  ylab("Movie Revenue")
+
+# Creating the stacked area chart
+ggplot(data = times2,aes(x = Year,y=Box.Office, fill=Rating)) +
+  geom_area() +
+  ggtitle("Movie Revenue per Category Throughout") +
+  xlab("Years") +
+  ylab("Movie Revenue")
+
+# Creating faceted line chart 
+ggplot(data = times2,aes(x = Year,y=Box.Office)) +
+  geom_line() + 
+  facet_wrap(facets = ~Rating) +
+  ggtitle("Movie Revenue per Category Throughout") +
+  xlab("Years") +
+  ylab("Movie Revenue")
+
