@@ -71,6 +71,8 @@ theme(panel.background = element_blank(),
 	axis.ticks.y = element_blank())
 	
 ```
+![](worldmap-densityplot.png)
+
 **Creating a dot Contour map**
 
 Dots are placed one above other so to get a better view we add jitter to it and create a contour map instead. 
@@ -91,6 +93,7 @@ theme(panel.background = element_blank(),
 	axis.ticks.y = element_blank())
 
 ```
+![](contourmap.png)
 
 **How to Zoom into Maps**
 
@@ -112,6 +115,7 @@ theme(panel.background = element_blank(),
 	axis.ticks.y = element_blank())
 
 ```
+![](contour-zoomed.png)
 
 **Creating a level Plot**
 Creating a zoomed level plot 
@@ -199,7 +203,7 @@ theme(panel.background = element_blank(),
 	axis.text.y = element_blank(),
 	axis.ticks.y = element_blank())
 ```
-
+![](colorcoded-map.png)
 Re projecting the map
 
 ```
@@ -225,3 +229,4 @@ theme(panel.background = element_blank(),
 	axis.ticks.y = element_blank())
 
 ```
+![](orthographicproj-map.png)
