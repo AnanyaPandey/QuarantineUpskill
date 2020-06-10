@@ -27,6 +27,23 @@ SVMs, Perceptron, Random Forests, Decision trees, KNN algorithm are some other a
 
 Sagemaker also contains XGBoost, which works on the principle of creating a strong classfiier out of many weak classifier, the method also known as boosting. (Graqdient boosting)
 
+there are probably 100s of supervised learning, some most famous families of algorithm which are fairly succesful are : 
+
+1. Linear Supervised Learning : Amazon Sagemaker has an algo called Linear Learner, 
+	* 	a. Linear Classification (Linear Decision Boundry)
+	* 	b. Linear Regression
+2. SVM
+3. Perceptron
+4. Non Linear Supervised Learning
+	* 	SVM
+	* 	SVC
+	* 	Decision Trees
+	* 	Random Forests
+	*  XGBoost
+	*  Factorization Methods : works best high dimensional data. (click prediction and recommendation etc.)
+5. Polynomial
+6. Neural Networks
+	
 
 ### Unsupervised Learning
 
@@ -42,10 +59,32 @@ Amazon sagemaker has the K means algorithm. Also there is PCA available in sagem
 
 Random cut forest for anamoly detection is available in sagemaker and Kinesis data analytics. Similar algorithm is hot spot detection. 
 
+**Clustering** is one of the important alogorithm of unsupervised learning. Also two algorithms might detect different number of clusters for the same data. 
+
+**Anomoly Detection** is one of the most used algorithms under unsupervised learning. Draud detection E.g. Random cut forests. 
+
+**Topic Modelling** Text analysis, available in Amazon Comprehend services.
+The algo can provide top words that are used in a filtered context. 
+
+Amazon SageMaker has K-Means and PCA. It is specially useful in dimension reduction. LDA : Used by Topic Modelling.
+
+
+
 ### Reinforcement Learning
 In some sense, it can build intelligent behaviour by maximising the output or minimizing the losses, by reinforcement. The agent controlled by the machine is learning by trial and error and no rxplicit teacher. based on the penalty it learns and gets better with each iteration. Most used in automated game plays. tic tac toe, pacman, mario etc. 
 
-## Deep Learning
+
+### Deep Learning 
+Neuron : A compute engine which has a vector of inputs and with weights these inputs are sumproducted and passed through activation function. Increasing the nodes and layers it will be called Artificial Neural network. 
+
+Backpropogating is used to reduce the error. One might ask how deep is the deep ? is there any limit ? how many layers ?
+
+1000s of layers have already been computed and trained. Amazon EC2 have the GPU enabled computing power. It gives flexibility to deploy and use the trainig odel system only durnig trainapping the model which gives great computing power in limited budget. 
+
+Deep learnings can be supervised or unsupervised-learning based on data and time of :
+
+
+
 
 
 
