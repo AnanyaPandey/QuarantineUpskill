@@ -73,3 +73,23 @@ ec2-user
 
 CTRL+D to logout /Exit 
 
+## EC2 Security Groups 
+These are fundamental network security in AWS.
+they control how traffic flows / alloweed into or out of EC2 machines
+
+* helpful in troubleshooting network issues. 
+* Security groups are like firewall rules with inbound and out bound traffic rules
+* Port : Protocol : Source : Destination 
+* It also has a tag if user need to assign a tag and want to identify and group different machines with same tag (security group)
+* If any port is blocked or any particular services is not working say SMTP or FTP or 443 or 80 first thing to check is the security group.
+
+What is in Scope for Security Groups
+
+ - Ports
+ - Authorise IP ranges IPv4 and IPv6
+ - Inbound Netowrk
+ - Outbound Network 
+
+ 
+ There can be multiple instances having ssame sec groups or vice versa.
+ 
