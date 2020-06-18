@@ -95,7 +95,7 @@ wordcloud(
   max.words = 50
 )
 ```
-
+![](freqwordcloud.png)
 
 Loading the data where we have revenue, count and critic score assigned to each word in the dataset.
 
@@ -118,7 +118,7 @@ wordcloud(
   scale = c(2,0.1)
 )
 ```
-
+![](quantwordcloud.png)
 
 ### Preparation of colour pallete and categories for colours scale
 
@@ -158,3 +158,4 @@ wordcloud(
 options(warn=0)
 
 ```
+![](coloredwordcloud.png)
