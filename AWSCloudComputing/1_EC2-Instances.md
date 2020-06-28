@@ -92,4 +92,22 @@ What is in Scope for Security Groups
 
  
  There can be multiple instances having ssame sec groups or vice versa.
+ ### Deep dive into Security Groups
+ 
+  -  Access to ports
+  - IPv4 and IPv6
+  -  Control of Inbound network
+  - Control of oubound network 
+ 
+ There can be multiple security groups, say one for inbound one for oubound
+ or all can be put in just one security groups. They can be locked to one vpc region so if an instnce in other region it has to have another group.
+ 
+ seep one security group for SSH separately. By Default 
+ **All Inbound traffic is blocked and outbound traffic is allowed**
+ 
+ 
+ #### referencing to other sec groups : 
+ If an instance has a common security group attached to it, then It will have access ot the previous security group.
+ 
+ Shared Security Group ![](secgrp.png)
  
