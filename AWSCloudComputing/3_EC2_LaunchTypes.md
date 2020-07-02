@@ -1,4 +1,17 @@
-# EC2 Instance Launch Types
+1. [Launch Types] (#i1)
+2. [Instance Types] (#i2)
+	1. [Burstable] (#i21)
+	2. [Burstable Unlimited] (#i22)
+3. [EC2 AMIs] (#i3)
+	1. [Public AMO] (#i31) 
+	2. [AMI Storage] (#i32)
+	3. [AMI Pricing] (#i33)
+4. [EC2 Placement Greoup](#i4)
+	1. [Cluster](#i41)
+	2. [Spread](#i42)
+	3. [Partition](#i43)
+
+# <a name="i1">EC2 Instance Launch Types </a>
 -----
 
 Under Instances  : 
@@ -23,7 +36,7 @@ Request any time from
 Request any time to 
 Tenancy - use can chose to have a shared hardware / dedicated insatnce / dedicated host
 
-## EC2 Instance types (NOT Launch Types)
+## <a name="i2"> EC2 Instance types (NOT Launch Types)</a>
 The main ones are listed below and are not the exhaustive list. 
 
  - R type : Those which need lot of RAM. (in Memory Caches)
@@ -36,16 +49,16 @@ The main ones are listed below and are not the exhaustive list.
  
  An exhaustive list and comparison [can be found here ](https://www.ec2instances.info/)
  
- #### Burstable : T2/T3 :
+#### <a name="i21"> Burstable : T2/T3 : </a>
  Burst means overall a system is good performing. doing fine in CPU performance, E.g. : an application is run and suddenly CPU usage spikes. In this condition CPU can get burst and handles the spike welll. When a machine bursts, it uses the burst credit. If all credit is over the CPU becomes normal and may not give great performance. 
 The user can buy credits in advance. If the machine stops, bursting career 
  
-  #### Burstable : T2/T3 Unlimited :
+#### <a name="i22">Burstable : T2/T3 Unlimited :</a>
   From Nov 2017 it ispossible to have unlimited burst credit balance. Extra money need to be paid for the unlimited balance. IF the user id not monitoring the health and running important computation they can pay extra and have unlimired credit of bursts.
   
  If the instance consistenylt running on low credit, user may chose to move it to a normal non bursting instances. 
   
- ## EC2 AMIs
+## <a name="i3">EC2 AMIs </a>
  AMAZON IMAGES: AWS offers alpt of base images : 
   
  - Ubuntu
@@ -69,16 +82,16 @@ These can be customized using the EC2 user data. User can customize these AMIs a
 
   **AMIs built for specific regions** : an AMI may not be available in particular region.
   
-### Public AMIs 
+### <a name="i31"> Public AMIs </a>
 User can opt to use the AMIs from other people and User can also rent other peoples AMI. Basically user can rent the expertise of a designed / optimised AMI if one choses not to do themselves.One can also becom an AMI expert and start renting. 
 
 <span style = color:red> WARNING! Do not trust any AMI available without due diligence. </span>
 
-#### AMI STORAGE 
+#### <a name="i32"> AMI STORAGE </a>
 Basically AMIs need space and they reside in the amazon S3 space. S3 is the cheap online storage where most of the storage and backups are stored. By default any users AMI are locked and private for the particular region /account.
 User can make it public and make it available in marketplace, sell it to other users. 
 
-#### AMI PRICIHG
+#### <a name="i33"> AMI PRICIHG </a>
 Amazon charges for the AMI that takes space of S3. amazon charge for the space. 
 
 For US-EAST-1
@@ -98,7 +111,7 @@ Verify and provide details. -> Create Image. When the  image under AMIs become a
 
 While launching the AMI : thing to notices : root volume is coming from the snapshot that is backed up from the Instance from which image is createad. AMIs are Amazons Machine Image.
 
-### Cross Account AMI : FAQ
+### <a name="i34">Cross Account AMI : FAQ </a>
 
  - Sharing the AMI doesnt change the owneership of the AMI
  - If a user copies the shared AMI to and to their region then they become the owner of the AMI.
@@ -115,14 +128,14 @@ While launching the AMI : thing to notices : root volume is coming from the snap
  
  RIGHT CLICK -> COPY AMI -> will NOT WORK if CREATE VOLUME IS NOT ALLOWED.
  
- ## EC2 Placement Groups 
+## <a name="i4">EC2 Placement Groups </a>
  Placement stratgy is deciding how to place the EC2 instance in the AWS infrastructure. This strategy can be defined using the placement groups. There are 3 Strategies while creating a placement group.
  
   1. Cluster : Cluster instances (Clustered together) allow low latency single availability zone.  - High performance - High risk
   2. Spread : Spread acorss different hardware : restriction of 7 Instances per group per AZ.Spread is best for the critical application.
   2. Partition : The instances are spread but spread across different partitions. (which rely on different sets of racks) Instances may not be spread but one partition is sperated from another partition. Within an availability zone 100s of EC2 instances er group is allowed fir partinion spread. (Allows apps like cassandra, Hadoop etc.)
 
-### Cluster : 
+### <a name="i41">Cluster : </a>
 
 - Very high bandwidth and good latency
 - Single point of failure
@@ -133,7 +146,7 @@ While launching the AMI : thing to notices : root volume is coming from the snap
 
 ![](cluster.png)
 
-### Spread : 
+### <a name="i42">Spread : </a>
 
 - Designed to minimize the point of failure
 - Span across multiple AZs
@@ -143,7 +156,7 @@ While launching the AMI : thing to notices : root volume is coming from the snap
 
 ![](spread.png)
 
-### Partition : 
+### <a name="i43">Partition : </a>
 
  - Upto 7 partitions per AZ
  - Upto 100s of instances
