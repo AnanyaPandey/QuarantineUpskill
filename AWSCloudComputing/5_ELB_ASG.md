@@ -1,6 +1,38 @@
-# ELB and ASG (Scalability and High Availability)
+# ELB and ASG 
+ * Elastic Load Balancing 
+ * Auto Scaling Group
+ * (Scalability and High Availability)
 
 Scalability means an app or infra is able to handle bigger load or is capable of exanding and rising to be able to handle higher load. 
+
+### Table Of Contents
+1. [Scalability](#a1)
+2. [High Availability](#a2)
+3. [Elastoic Load Balancing](#a3)
+	1. [Why ELB](#a31)
+	2. [Health Checks](#a32)
+	3. [Types of ELBs](#a33)
+	4. [ELB Faq](#a34)
+4. [Classic Load Balancer](#a4)
+5. [Application Load Balancer](#a5)
+	1. [ALB Target Group](#a51)
+	2. [ALB Faq](#a52)
+6. [Network Load Balancer](#a6)
+7. [Load Balancer Stickiness](#a7)
+8. [Cross Zone Load Balancing](#a8)
+9. [SSL Certificates](#a9)
+	1. [SNI : Server Name Indication](#a91)
+	2. [CLB SSL Certifiate](#a92)
+	3. [ALB / NLB SSL Certificate](#a93)
+10. [ELB Connection Draining](#a10)
+11. [Auto Scaling Group](#a11)
+	1. [Attributes of ASG](#a111)
+	2. [Auto Scaling Alarms](#a112)
+	3. [ASG FAQ](#a113)
+	4. [ASG Scaling Policies](#a114)
+	5. [ASG AutoScaling Cooldown](#a115)
+	6. [ASG for Solution Architect](#a116)
+12. [Launch Template v/s Launch Configuration](#a12)
 
 **TWO types of scalability**
 
@@ -23,7 +55,7 @@ TWO servers extra is installed so now 3 servers can together handle 9 services.
 Horizontal scaling imploes distributed systems. Very common for web application/ othe rmodern applications for laod distribution. In a lot of instance it is easy to scale horizontally (AMAZON EC2) as well as vertically. 
 
 
-## High Availability
+## <a name="a2">High Availability</a>
 High availability is similar to horizontal scaling. Running an application on redundant systems. e.g. Running an app from twp DCs. (primary and redundant) if one hoes down other ksspe the app up. Highly available. (Two AZs in AWS)
 
 HA can be passive as well. (RDS Multi AZ) (active passive)
@@ -44,7 +76,7 @@ High Availability
 - Auto Scaling Group with multi AZ
 - Load Balancer with multi AZ
 
-## Load Balancing (ELB - Elastic Load Balancing)
+## <a name="a3">Load Balancing (ELB - Elastic Load Balancing)</a>
 
 Load balancing - Systems/servers that distribute the internet/data traffic / load to multiple systems/servers. (EC2 Instances) Load balancer provide single pointof contact (which will act as DNS) and load is spread which can be handled effectively without a log. 
 
@@ -56,7 +88,7 @@ Load balancing - Systems/servers that distribute the internet/data traffic / loa
 - Separation of public and private traffic 
 
 
-### Why use Amazon EC2 Load Balancer ?
+### <a name="a31">Why use Amazon EC2 Load Balancer ?</a>
 
  - It is managed load balancer
  	- AWS make sures that is is working
@@ -65,14 +97,14 @@ Load balancing - Systems/servers that distribute the internet/data traffic / loa
  - It is expensive to setup and manage own load balancer (cost+effort)
  -  It can be integrated with other instances. 
 
-#### Health checks : 
+#### <a name="a32">Health checks : </a>
   - Load baloancers check that the instances connected to these balancers are healthy and available to accept the requests. 
   - Health checkup is donw with port and route
   - Response is NOT 200(OK) then the instance is considered unhealthy
   - On Port 4567 (health checks done by the load balancer)
   - The usual frequency of health checks is 5 seconds
   
-### Types of Load Balancers (in AWS)
+### <a name="a33">Types of Load Balancers (in AWS)</a>
 
  - Classic Load Balanceers (v1 old generation - 2009) - Support HTTP(S) and TCP
  - Application Load Balancers(v2 - New Gen - 2016) - support HTTP(S) and websockets
@@ -81,7 +113,7 @@ Load balancing - Systems/servers that distribute the internet/data traffic / loa
  Traffic between internet and Load Balancer (80/443)
  Traffic betweenb ELB and EC2 Instances : (port 80) 
  
-## ELB FAQs
+### <a name="a34">ELB FAQs</a>
 
   - ELBs can scale up but not instantaneously, need to contact AWS for a 'warm-up'
   - Troubleshooting
@@ -94,7 +126,7 @@ Load balancing - Systems/servers that distribute the internet/data traffic / loa
  - Cloud watch metrics : Provides ggregated statistics of requests (count etc.)
 
 
-## Classic Load Balancers
+## <a name="a4">Classic Load Balancers</a>
 
 It support HTTP, HTTPS(Layer7) and TCP(Layer4) and health checks are either tcp or http based. This will have a fixed hostname XXXX.region.elb.amazonaws.com
  
@@ -112,7 +144,7 @@ Allow : Load Balancer --> port 80 ---->  Instances (only)
 Change this to : 
 my-first-elb-SG ----> port 80 ------> Instance (only) 
  
-## Application Load Balancer (ALB)
+## <a name="a5">Application Load Balancer (ALB)</a>
 
  - Application Load Balancer works are layer 7  (http)
  - It allows multiple http load balancer across single machines
@@ -129,7 +161,7 @@ my-first-elb-SG ----> port 80 ------> Instance (only)
 
 ![](ALB.png)
 
-### Target groups
+### <a name="a51">Target groups</a>
  
 - EC2 Instances (can be managed by auto scaling group) - HTTP
 - ECS tasks, (managed by ECS itself) - HTTP
@@ -137,7 +169,7 @@ my-first-elb-SG ----> port 80 ------> Instance (only)
 - IP addresses (private)
 - ALB can route to different target groups and health check is done at the target group level. 
 
-### ALB Faq :
+### <a name="a52">ALB Faq :</a>
 
  - Application servers dont see the ip of client directly
  	- Ip of client is forwarded in the header X-Forwarded-For
@@ -153,7 +185,7 @@ my-first-elb-SG ----> port 80 ------> Instance (only)
  Rule 1 : by default send the port 80 requests to -> first target group.
  
  
-## Network Load Balancer (NLB)
+## <a name="a6">Network Load Balancer (NLB)</a>
 Network load balancers allot layer 4 traffic hence they allow TCP / UDP based traffic to the instances. 
 
  - These can handle millions of requests 
@@ -164,7 +196,7 @@ Network load balancers allot layer 4 traffic hence they allow TCP / UDP based tr
  - There is no security group for NLB because it forwards the TCP/UDP on port 80 
  - We have to edit the instance security group and allow inbound traffic no port 80(TCP)
 
-### Load Balancer Stickiness
+## <a name="a7">Load Balancer Stickiness</a>
  Same client is always reditected to a particular instances behind the ELB.
  
   - This works for CLB and ALB
@@ -181,7 +213,7 @@ Network load balancers allot layer 4 traffic hence they allow TCP / UDP based tr
 -  Cookie will expire in this duration.
 
 
-### Cross Zone Load Balancing
+## <a name="a8">Cross Zone Load Balancing</a>
 
 - Load balancer will balancer load between all the registered instances across all AZs.
 - CLB : By default cross zone load balancingi s disabled.
@@ -197,7 +229,7 @@ Network load balancers allot layer 4 traffic hence they allow TCP / UDP based tr
 **HandsOn**
 Under Attribute : one can find Cross Zone Load Balancing
 
-### ELB SSL Certificates (also TLS)
+## <a name="a9">ELB SSL Certificates (also TLS)</a>
 
 An SSL certificate allows traffic between the client and the load balancer to be encrypted in transit ( in flight encryption ). TLS is the transport layer security, hich is a newer version of SSL. 
  
@@ -211,7 +243,7 @@ An SSL certificate allows traffic between the client and the load balancer to be
 - Clients can use the SNI -Server Name Indication. (to tell which hostname they reach) 
 - It also has policy to identify how to handle / support older version of SSL /TLS 
 
-## SNI - Server Name Indication
+### <a name="a91">SNI - Server Name Indication</a>
  
 - SNI solves the problem of loadinb multiple SSL certificatews on to one web server (i.e  to support multiple websites)
 - SNI works on a newer protocol that requires a client to tell the hostname of the target server during initial SSL handshake
@@ -220,18 +252,18 @@ An SSL certificate allows traffic between the client and the load balancer to be
 
 ![](SNI.png)
 
-#### CLB SSL Certificates
+#### <a name="a92">CLB SSL Certificates</a>
 
  - Classic can have one SSL certificate
  - Mult use multiple CLB for multiple SSL certs.
 
-#### ALB /NLB SSL Certificates
+#### <a name="a93">ALB /NLB SSL Certificates</a>
 
  - Multiple listeners, multiple SSL can be installed 
  - Make use of SNI to make it work
  - For Each HTTPS Listener Rule we can estqablish different SSL Certificate
 
-## ELB - Connection Draining
+## <a name="a10">ELB - Connection Draining</a>
 ### Exam point of view
 
 This is known by two names, for Classical Load Balancer it is called connection draining and for target groups it is called : Deregistration delay.
@@ -244,7 +276,7 @@ For web server requests it could be between 1-20 seconds, for some critical data
 
 Max limit for this can be 3600s (1 Hour). or 0 to disable it and show error right away without any wait period. Any new connection during the draining will be redirected to other available instances. 
 
-# Auto Scaling Group. (ASG Overview)
+# <a name="a11">Auto Scaling Group. (ASG Overview)</a>
 ----
 
 Web servers and applications have a variable load so ASG helps match to this load. the goal of the EC2 Auto scaling group is to : 
@@ -254,7 +286,7 @@ Web servers and applications have a variable load so ASG helps match to this loa
 
 We can define the min and max running instance in an ASG. ALSO ASG allows to auto register new instances to the load balancer when scaling out.
 
-### Attributes of ASG :  
+### <a name="a112">Attributes of ASG :  </a>
 
 - A Launch configuration : (common things which needed during instance creation)
 	- AMI + Instance type
@@ -267,7 +299,7 @@ We can define the min and max running instance in an ASG. ALSO ASG allows to aut
 - Load Balancer /target group related information. 
 - Scaling policies (how/when to scale out/in)
 
-### Auto Scaling Alarms
+### <a name="a113">Auto Scaling Alarms</a>
 
 - It is possible to scale based on cloud watch alarm (monitoring e.g. CPU reaches 95%)
 -  An alarm can watch any metric (e.g. CPU utilization/memory/storage etc)
@@ -279,7 +311,7 @@ We can define the min and max running instance in an ASG. ALSO ASG allows to aut
 
 We can have auto scaling managed by EC2 and we can say i would like the average utilization need to be around XX % and ASG will scale out or scale in to manage the overall average CPU utilization.
 
-Rules for scaling alarm : 
+**Rules for scaling alarm :**
 
 1. Targer CPU utilization
 2. Number of requests per ELB instance
@@ -288,7 +320,7 @@ Rules for scaling alarm :
 
 It is not only limited to the available metrics in AWS, we can also set our custom metric using CloudWatch. We can also send the metric data directly from application to CloudWatch using PutMetric API. --> Create CloudWatch Alarm to set off for the High and Low for the metric --> Use Cloudwatch alarm for scaling policy in ASG.
 
-### ASG FAQ
+### <a name="a114">ASG FAQ</a>
 
 - Scaling policies can be any metric or schedule
 - ASG use launch configuration/launch template
@@ -327,7 +359,7 @@ Create
 We can go the the ASG and change the desired instance count to 2. and it will automatically createa another instance register it to the target group.
 
 
-## ASG Scaling policies
+## <a name="a115">ASG Scaling policies</a>
 There can be different approaches of scaling the targets (instances)
 
 ###  1. Target Tracking Scaling
@@ -344,7 +376,7 @@ There can be different approaches of scaling the targets (instances)
  - This is for the time when we can anticipate the pattern of users.
  - E.g. WE neeed 10 instances during 3 PM Fridays.
 
-## ASG Auto Scaling - Cooldown
+## <a name="a116">ASG Auto Scaling - Cooldown</a>
  - Cooldown period ensures that one cooldown activity doesnt affect /distrub any other scaling activity.
  - It waits for the previous scaling activity to take place and then perform termination and launching of instance
  - In addition to the default cool down, can create cooldown to a specific **simple scaling**
@@ -355,6 +387,30 @@ There can be different approaches of scaling the targets (instances)
  **Handson**
  Under : Automatic Scaling in ASG. There are Scaling policies and Scheduled actions.
  
- 
- 
- 
+## <a name="a117">ASG for Solution Architect : </a>
+ASG default termination policy  : ASG tries to balance the instances across AZs
+By default as soon as an instance is launched in ASG, it is in service
+**Pending State** : (Thre is a pending wait to install extra applications and scripts). **Terminating State** : To perform steps before terminating
+
+![](ASGinstancecycle.png)
+
+While Terminating an instance : 
+
+1. Find AZ with most number of instances
+2. If there are multiple instances, chose theone with the oldest launch condifuration
+
+## <a name="a12">Launch Template v/s Launch Configuration</a>
+
+* Both 
+	* Allow AMI ID
+	* Sec Key pair
+	* Sec Group
+	* Other EC2 Instance Parameter
+* Launch Configuration ( Legacy ) 
+	* Must be recreated every time any parameter is changed in it
+* Launch Template ( New ) 
+	* They can have multiple versions 
+	* Parameter Subset creationn is possible
+	* (Partial configuration for reuse /inheritence)
+	* Allows provision of mix of On demand and Spot Instances
+	* Can use T2 unlimited burst feature

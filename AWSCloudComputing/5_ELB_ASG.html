@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>5_ELB_ASG</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+  body {
+    padding: 2cm; 
+  }
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">ELB and ASG (Scalability and High Availability)</h1>
+
+<p>Scalability means an app or infra is able to handle bigger load or is capable of exanding and rising to be able to handle higher load. </p>
+
+<h3 id="toc_1">Table Of Contents</h3>
+
+<ol>
+<li><a href="#a1">Scalability</a></li>
+<li><a href="#a2">High Availability</a></li>
+<li><a href="#a3">Elastoic Load Balancing</a>
+
+<ol>
+<li><a href="#a31">Why ELB</a></li>
+<li><a href="#a32">Health Checks</a></li>
+<li><a href="#a33">Types of ELBs</a></li>
+<li><a href="#a34">ELB Faq</a></li>
+</ol></li>
+<li><a href="#a4">Classic Load Balancer</a></li>
+<li><a href="#a5">Application Load Balancer</a>
+
+<ol>
+<li><a href="#a51">ALB Target Group</a></li>
+<li><a href="#a52">ALB Faq</a></li>
+</ol></li>
+<li><a href="#a6">Network Load Balancer</a></li>
+<li><a href="#a7">Load Balancer Stickiness</a></li>
+<li><a href="#a8">Cross Zone Load Balancing</a></li>
+<li><a href="#a9">SSL Certificates</a>
+
+<ol>
+<li><a href="#a91">SNI : Server Name Indication</a></li>
+<li><a href="#a92">CLB SSL Certifiate</a></li>
+<li><a href="#a93">ALB / NLB SSL Certificate</a></li>
+</ol></li>
+<li><a href="#a10">ELB Connection Draining</a></li>
+<li><a href="#a11">Auto Scaling Group</a>
+
+<ol>
+<li><a href="#a111">Attributes of ASG</a></li>
+<li><a href="#a112">Auto Scaling Alarms</a></li>
+<li><a href="#a113">ASG FAQ</a></li>
+<li><a href="#a114">ASG Scaling Policies</a></li>
+<li><a href="#a115">ASG AutoScaling Cooldown</a></li>
+<li><a href="#a116">ASG for Solution Architect</a></li>
+</ol></li>
+<li><a href="#a12">Launch Template v/s Launch Configuration</a></li>
+</ol>
+
+<p><strong>TWO types of scalability</strong></p>
+
+<ol>
+<li>Vertical </li>
+<li>Horizontal (Elasticity)</li>
+</ol>
+
+<p>Vertical : Size of the instance increases. 
+e.g. a server can handle 3 services simultaneously
+a Bigger server can handle 9 services simultaneously</p>
+
+<p>an application runing on t2micro and later it is scaled up to a t2large</p>
+
+<p><strong>vertical Scalability</strong> is used when we have a non distributed systems like database.
+There is always a limite of how much can an instance be scaled up. </p>
+
+<p><strong>Horizontal Scalability</strong> Increasing the number of instances /systems for the application when the laod increases to handle the bigger load. 
+e.g. a server can handle 3 service simultaneously
+TWO servers extra is installed so now 3 servers can together handle 9 services.</p>
+
+<p>Horizontal scaling imploes distributed systems. Very common for web application/ othe rmodern applications for laod distribution. In a lot of instance it is easy to scale horizontally (AMAZON EC2) as well as vertically. </p>
+
+<h2 id="toc_2"><a name="a2">High Availability</a></h2>
+
+<p>High availability is similar to horizontal scaling. Running an application on redundant systems. e.g. Running an app from twp DCs. (primary and redundant) if one hoes down other ksspe the app up. Highly available. (Two AZs in AWS)</p>
+
+<p>HA can be passive as well. (RDS Multi AZ) (active passive)
+HA can be active for horizontal scaling. (both active)</p>
+
+<p>Vertical Scaling (Scale up/down)</p>
+
+<ul>
+<li>Smalles : t2 nano : .5GB RAM and 1vCPU</li>
+<li>Largest : u 12tb 1 metal : 12.3 TB RAM and 448 vCPUs</li>
+</ul>
+
+<p>Horizontal Scaling (Scale out/in)</p>
+
+<ul>
+<li>Auto Scaling Group. (ASG)</li>
+<li>Load Balancers  (ELB)</li>
+</ul>
+
+<p>High Availability </p>
+
+<ul>
+<li>Auto Scaling Group with multi AZ</li>
+<li>Load Balancer with multi AZ</li>
+</ul>
+
+<h2 id="toc_3"><a name="a3">Load Balancing (ELB - Elastic Load Balancing)</a></h2>
+
+<p>Load balancing - Systems/servers that distribute the internet/data traffic / load to multiple systems/servers. (EC2 Instances) Load balancer provide single pointof contact (which will act as DNS) and load is spread which can be handled effectively without a log. </p>
+
+<ul>
+<li>Better handling of failure of instances.</li>
+<li>Do regular health checks patch upgrades on the instances</li>
+<li>Better handling of ssl termination (https)</li>
+<li>Enforce stickiness with cookies</li>
+<li>Provide HA across Zones</li>
+<li>Separation of public and private traffic </li>
+</ul>
+
+<h3 id="toc_4"><a name="a31">Why use Amazon EC2 Load Balancer ?</a></h3>
+
+<ul>
+<li>It is managed load balancer
+
+<ul>
+<li>AWS make sures that is is working</li>
+<li>security patches and maintainance by amazon ensureing HA</li>
+<li>AWS provides few config knobs to make sure we get what we expect!</li>
+</ul></li>
+<li>It is expensive to setup and manage own load balancer (cost+effort)</li>
+<li> It can be integrated with other instances. </li>
+</ul>
+
+<h4 id="toc_5"><a name="a32">Health checks : </a></h4>
+
+<ul>
+<li>Load baloancers check that the instances connected to these balancers are healthy and available to accept the requests. </li>
+<li>Health checkup is donw with port and route</li>
+<li>Response is NOT 200(OK) then the instance is considered unhealthy</li>
+<li>On Port 4567 (health checks done by the load balancer)</li>
+<li>The usual frequency of health checks is 5 seconds</li>
+</ul>
+
+<h3 id="toc_6"><a name="a33">Types of Load Balancers (in AWS)</a></h3>
+
+<ul>
+<li>Classic Load Balanceers (v1 old generation - 2009) - Support HTTP(S) and TCP</li>
+<li>Application Load Balancers(v2 - New Gen - 2016) - support HTTP(S) and websockets</li>
+<li><p>Network laod balancers (v2 - New Gen - 2017) - TCP, TLS(Secure TCP) and UDP</p>
+
+<p>Traffic between internet and Load Balancer (80/443)
+Traffic betweenb ELB and EC2 Instances : (port 80) </p></li>
+</ul>
+
+<h3 id="toc_7"><a name="a34">ELB FAQs</a></h3>
+
+<ul>
+<li>ELBs can scale up but not instantaneously, need to contact AWS for a &#39;warm-up&#39;</li>
+<li>Troubleshooting
+
+<ul>
+<li>4xx Errors : Client introduced errors</li>
+<li>5xx are application induced errors</li>
+<li>Error 503 load balancer error : ELB is out of capacity.</li>
+</ul></li>
+</ul>
+
+<h4 id="toc_8">Monitoring</h4>
+
+<ul>
+<li>ELB access log - this will log all access requests.</li>
+<li>Cloud watch metrics : Provides ggregated statistics of requests (count etc.)</li>
+</ul>
+
+<h2 id="toc_9"><a name="a4">Classic Load Balancers</a></h2>
+
+<p>It support HTTP, HTTPS(Layer7) and TCP(Layer4) and health checks are either tcp or http based. This will have a fixed hostname XXXX.region.elb.amazonaws.com</p>
+
+<p>Confiruring health checks</p>
+
+<ul>
+<li>Reponse Timeout  5 seconds</li>
+<li>Interval : Every 10 seconds</li>
+<li>Unhealthy threshold : these many unhealthy resoonses - consider unhealthy</li>
+<li>Healthy Threshold : These many responses consider healthy</li>
+</ul>
+
+<p>Sec Group Changes</p>
+
+<p>Allow : Load Balancer --&gt; port 80 ----&gt;  Instances (only)</p>
+
+<p>Change this to : 
+my-first-elb-SG ----&gt; port 80 ------&gt; Instance (only) </p>
+
+<h2 id="toc_10"><a name="a5">Application Load Balancer (ALB)</a></h2>
+
+<ul>
+<li>Application Load Balancer works are layer 7  (http)</li>
+<li>It allows multiple http load balancer across single machines</li>
+<li>It allows to load balance multiple web applicationsin same machines (Ex : containers)</li>
+<li>It also redirectws http -&gt; https</li>
+<li>support for http/2 and websockets</li>
+<li> IT support routing tables to different target groups 
+
+<ul>
+<li>Routing based on path in url</li>
+<li>Routing based on he hostname in the url.</li>
+<li>Routing basd on query strings / headers : e.g. : www.youtube.com/watch?122343?id=123&amp;order=false</li>
+</ul></li>
+<li>Great fit for microservices and container based applications (Docker/Amazon ECS)</li>
+<li>Has a port mapping feature to redirect to a dynamic port (ECS)</li>
+<li> In comparison we would need one classic load balancer per application.</li>
+</ul>
+
+<p><img src="ALB.png" alt=""></p>
+
+<h3 id="toc_11"><a name="a51">Target groups</a></h3>
+
+<ul>
+<li>EC2 Instances (can be managed by auto scaling group) - HTTP</li>
+<li>ECS tasks, (managed by ECS itself) - HTTP</li>
+<li>Lambda function : http event can be transpated to Json Event. </li>
+<li>IP addresses (private)</li>
+<li>ALB can route to different target groups and health check is done at the target group level. </li>
+</ul>
+
+<h3 id="toc_12"><a name="a52">ALB Faq :</a></h3>
+
+<ul>
+<li>Application servers dont see the ip of client directly
+
+<ul>
+<li>Ip of client is forwarded in the header X-Forwarded-For</li>
+<li>We can also get port X-Forwarded-Port and protocol ; X-Forwarded-Proto</li>
+</ul></li>
+<li>Fixed hostname : (xxx.regio.elb.amazonaws.com)</li>
+<li><p>Latency is ~400ms</p>
+
+<p>ALBs at first after creation gives 503 temporarily available because registered targets are not assigned in target groups : Which means there are no instances to send traffic to. Once the target is registered we can proceed with accessing the ALB feom internet. </p>
+
+<p><strong>Once there are more than 1 target groups we can edit the rules of target grouop form the ALB load balancer under LISTENERS section</strong></p>
+
+<p>Rule 1 : by default send the port 80 requests to -&gt; first target group.</p></li>
+</ul>
+
+<h2 id="toc_13"><a name="a6">Network Load Balancer (NLB)</a></h2>
+
+<p>Network load balancers allot layer 4 traffic hence they allow TCP / UDP based traffic to the instances. </p>
+
+<ul>
+<li>These can handle millions of requests </li>
+<li>Latency is less ~100ms </li>
+<li>Towards internet : NLBs have one IP per zone and support assigning elastic IPs</li>
+<li>NLB not included in aws free tier. </li>
+<li>Target groups works same as ALB</li>
+<li>There is no security group for NLB because it forwards the TCP/UDP on port 80 </li>
+<li>We have to edit the instance security group and allow inbound traffic no port 80(TCP)</li>
+</ul>
+
+<h2 id="toc_14"><a name="a7">Load Balancer Stickiness</a></h2>
+
+<p>Same client is always reditected to a particular instances behind the ELB.</p>
+
+<ul>
+<li>This works for CLB and ALB</li>
+<li>It works on the cookie</li>
+<li>We have to control on the expiration daye of the cookie</li>
+<li>Use Case - User doesnt loose the session data (form filling)</li>
+<li>Enabling stickiness may bring some level of imbalance beause admin is now directing load instead of load balancer.</li>
+</ul>
+
+<p><strong>Hands on</strong></p>
+
+<ul>
+<li>Stickiness will be there at the trget group level for ALBs.</li>
+<li>Mention the duration of stickiness</li>
+<li>Requests coming from clients will be kept to the same instance for the mentioned duration. </li>
+<li> Cookie will expire in this duration.</li>
+</ul>
+
+<h2 id="toc_15"><a name="a8">Cross Zone Load Balancing</a></h2>
+
+<ul>
+<li>Load balancer will balancer load between all the registered instances across all AZs.</li>
+<li>CLB : By default cross zone load balancingi s disabled.</li>
+<li>CLB : No charges for inter zone LBs</li>
+<li>(Usualy in AWS when data geso from one zone to another a user is charged)</li>
+<li>ALB : Always On and cannot be disabled.</li>
+<li>No Charges for ALB as well. </li>
+<li>NLB: Disabled by default.</li>
+<li>NLB: Cross zone LB is charged. (Regional Data Transfer Charges may apply)</li>
+</ul>
+
+<p><img src="CrossZoneLB.png" alt=""></p>
+
+<p><strong>HandsOn</strong>
+Under Attribute : one can find Cross Zone Load Balancing</p>
+
+<h2 id="toc_16"><a name="a9">ELB SSL Certificates (also TLS)</a></h2>
+
+<p>An SSL certificate allows traffic between the client and the load balancer to be encrypted in transit ( in flight encryption ). TLS is the transport layer security, hich is a newer version of SSL. </p>
+
+<ul>
+<li>Public SSL certificates are issued by CA (certifiacte authorities)</li>
+<li>Digicert, GoDaddy, Symantec, DigiSign etc.</li>
+<li>SSL Certificates come with the expiry date and must be renewed. </li>
+<li>The Load Balancer uses an X.509 certificate </li>
+<li>Admin can manage these using AWS Certificate Manager. </li>
+<li>Admin can create its own certificate </li>
+<li>an HTTPS Listener need to be setup in the load balancer</li>
+<li>Clients can use the SNI -Server Name Indication. (to tell which hostname they reach) </li>
+<li>It also has policy to identify how to handle / support older version of SSL /TLS </li>
+</ul>
+
+<h3 id="toc_17"><a name="a91">SNI - Server Name Indication</a></h3>
+
+<ul>
+<li>SNI solves the problem of loadinb multiple SSL certificatews on to one web server (i.e  to support multiple websites)</li>
+<li>SNI works on a newer protocol that requires a client to tell the hostname of the target server during initial SSL handshake</li>
+<li>The server will then find the correct certificate or returns the default one.</li>
+<li>Only works with ALB or NLB.</li>
+</ul>
+
+<p><img src="SNI.png" alt=""></p>
+
+<h4 id="toc_18"><a name="a92">CLB SSL Certificates</a></h4>
+
+<ul>
+<li>Classic can have one SSL certificate</li>
+<li>Mult use multiple CLB for multiple SSL certs.</li>
+</ul>
+
+<h4 id="toc_19"><a name="a93">ALB /NLB SSL Certificates</a></h4>
+
+<ul>
+<li>Multiple listeners, multiple SSL can be installed </li>
+<li>Make use of SNI to make it work</li>
+<li>For Each HTTPS Listener Rule we can estqablish different SSL Certificate</li>
+</ul>
+
+<h2 id="toc_20"><a name="a10">ELB - Connection Draining</a></h2>
+
+<h3 id="toc_21">Exam point of view</h3>
+
+<p>This is known by two names, for Classical Load Balancer it is called connection draining and for target groups it is called : Deregistration delay.</p>
+
+<p>What is Connection Draining : It is the time to complete the in flight requests when the instances are de-registering / becoming unhealthy.</p>
+
+<p>Connection delay caused because the existing connected instances is draining, and how much time the request should wait for the connection to come back, that time can be set in the load balancer as deregistration delay / connection draining. </p>
+
+<p>For web server requests it could be between 1-20 seconds, for some critical data processing jobs it could be higher say 200-300 seconds. </p>
+
+<p>Max limit for this can be 3600s (1 Hour). or 0 to disable it and show error right away without any wait period. Any new connection during the draining will be redirected to other available instances. </p>
+
+<h1 id="toc_22"><a name="a11">Auto Scaling Group. (ASG Overview)</a></h1>
+
+<hr>
+
+<p>Web servers and applications have a variable load so ASG helps match to this load. the goal of the EC2 Auto scaling group is to : </p>
+
+<ol>
+<li>Scale out (add EC2 Instance) when the load increases.</li>
+<li>Scale in (remove EC2 instance) when the load decreases.</li>
+</ol>
+
+<p>We can define the min and max running instance in an ASG. ALSO ASG allows to auto register new instances to the load balancer when scaling out.</p>
+
+<h3 id="toc_23"><a name="a112">Attributes of ASG :  </a></h3>
+
+<ul>
+<li>A Launch configuration : (common things which needed during instance creation)
+
+<ul>
+<li>AMI + Instance type</li>
+<li>EC2 User Data</li>
+<li>EBS Volume (Storage)</li>
+<li>Security Groups</li>
+<li>SSH key pair </li>
+</ul></li>
+<li>The Min size, Max size and Initial Capacity (Desired Capacity)</li>
+<li>Network and Subnet information</li>
+<li>Load Balancer /target group related information. </li>
+<li>Scaling policies (how/when to scale out/in)</li>
+</ul>
+
+<h3 id="toc_24"><a name="a113">Auto Scaling Alarms</a></h3>
+
+<ul>
+<li>It is possible to scale based on cloud watch alarm (monitoring e.g. CPU reaches 95%)</li>
+<li> An alarm can watch any metric (e.g. CPU utilization/memory/storage etc)</li>
+<li> Metrics are calculated for overall ASG instances. </li>
+<li> Scaling policy can be set as per schedule (e.g. morning 8 to 12 heavy load)</li>
+</ul>
+
+<p>----Scalein-Alarm-Threshold &lt;---------------------&gt; ScaleOut-Alarm-Threshold----</p>
+
+<p>We can have auto scaling managed by EC2 and we can say i would like the average utilization need to be around XX % and ASG will scale out or scale in to manage the overall average CPU utilization.</p>
+
+<p><strong>Rules for scaling alarm :</strong></p>
+
+<ol>
+<li>Targer CPU utilization</li>
+<li>Number of requests per ELB instance</li>
+<li>Avg N/w in </li>
+<li>Avg N/w out</li>
+</ol>
+
+<p>It is not only limited to the available metrics in AWS, we can also set our custom metric using CloudWatch. We can also send the metric data directly from application to CloudWatch using PutMetric API. --&gt; Create CloudWatch Alarm to set off for the High and Low for the metric --&gt; Use Cloudwatch alarm for scaling policy in ASG.</p>
+
+<h3 id="toc_25"><a name="a114">ASG FAQ</a></h3>
+
+<ul>
+<li>Scaling policies can be any metric or schedule</li>
+<li>ASG use launch configuration/launch template</li>
+<li>To update an ASG we must provide the new launch template</li>
+<li>We can assign IAM role to ASG and it will be passed on to EC2 instances </li>
+<li>ASGs are free but AWS charges for the underlying instances that are launched.</li>
+<li>in an instances is under ASG and got terminated unexpectedly, a new instance is created precautionary. </li>
+<li>if an ELB marks an instance as unhealthy ASG can terminate and raise a new instance as a replacement. </li>
+<li>ASG also allows to choose froma combination of On Demand / Spot Instances to better cost asving.</li>
+</ul>
+
+<p>Launch templaste v/s Launch config
+template - new 
+template - allow spot fleet
+config - allow only one type of instance</p>
+
+<p><strong>HandsOn</strong></p>
+
+<p>Create ASG
+Create LaunchTempalte
+Select LaunchTemplate
+Purchse Option
+Select all 3 Subnets, so that instances shall be launched across multiple subnets/multiple AZs.
+Specify load balancing and health checks
+Enable Load Balancing
+Select Target Group (instances are registed here by default)
+Choose from EC2 /ELB health checks
+Configure Group size and Scaling policies
+Scaling policies (when to scale) - optional
+scale in protection - not required as of now.
+Notifications
+Tags
+Review 
+Create</p>
+
+<hr>
+
+<p>We can go the the ASG and change the desired instance count to 2. and it will automatically createa another instance register it to the target group.</p>
+
+<h2 id="toc_26"><a name="a115">ASG Scaling policies</a></h2>
+
+<p>There can be different approaches of scaling the targets (instances)</p>
+
+<h3 id="toc_27">1. Target Tracking Scaling</h3>
+
+<ul>
+<li>Most Simple and easy to setup</li>
+<li>Just need ot mention the metric we want to stick.</li>
+<li>E.g. We want the Average ASG CPU utilization to be around 80%</li>
+</ul>
+
+<h3 id="toc_28">2. Simple / Step Scaling</h3>
+
+<ul>
+<li>Scalling triggers when a CloudWatch Alarm kicks off </li>
+<li>E.g. CPU &gt; 90% add 2 unit of instances</li>
+<li>e.g. CPI &lt;30% Remove 1 unit of instance</li>
+</ul>
+
+<h3 id="toc_29">3. Schedule Action</h3>
+
+<ul>
+<li>This is for the time when we can anticipate the pattern of users.</li>
+<li>E.g. WE neeed 10 instances during 3 PM Fridays.</li>
+</ul>
+
+<h2 id="toc_30"><a name="a116">ASG Auto Scaling - Cooldown</a></h2>
+
+<ul>
+<li>Cooldown period ensures that one cooldown activity doesnt affect /distrub any other scaling activity.</li>
+<li>It waits for the previous scaling activity to take place and then perform termination and launching of instance</li>
+<li>In addition to the default cool down, can create cooldown to a specific <strong>simple scaling</strong></li>
+<li>Any scaling specific cooldown period override the default one.</li>
+<li>If an application is scaling up or down multiple times in an hour, we can modify the ooldown timer or the CloudWatch alarm eriod that riggers the scale.</li>
+<li><p>Difference between step and simple is that simple allows cooldown time;</p>
+
+<p><strong>Handson</strong>
+Under : Automatic Scaling in ASG. There are Scaling policies and Scheduled actions.</p></li>
+</ul>
+
+<h2 id="toc_31"><a name="a117">ASG for Solution Architect : </a></h2>
+
+<p>ASG default termination policy  : ASG tries to balance the instances across AZs
+By default as soon as an instance is launched in ASG, it is in service
+<strong>Pending State</strong> : (Thre is a pending wait to install extra applications and scripts). <strong>Terminating State</strong> : To perform steps before terminating</p>
+
+<p><img src="ASGinstancecycle.png" alt=""></p>
+
+<p>While Terminating an instance : </p>
+
+<ol>
+<li>Find AZ with most number of instances</li>
+<li>If there are multiple instances, chose theone with the oldest launch condifuration</li>
+</ol>
+
+<h2 id="toc_32"><a name="a12">Launch Template v/s Launch Configuration</a></h2>
+
+<ul>
+<li>Both 
+
+<ul>
+<li>Allow AMI ID</li>
+<li>Sec Key pair</li>
+<li>Sec Group</li>
+<li>Other EC2 Instance Parameter</li>
+</ul></li>
+<li>Launch Configuration ( Legacy ) 
+
+<ul>
+<li>Must be recreated every time any parameter is changed in it</li>
+</ul></li>
+<li>Launch Template ( New ) 
+
+<ul>
+<li>They can have multiple versions </li>
+<li>Parameter Subset creationn is possible</li>
+<li>(Partial configuration for reuse /inheritence)</li>
+<li>Allows provision of mix of On demand and Spot Instances</li>
+<li>Can use T2 unlimited burst feature</li>
+</ul></li>
+</ul>
+
+
+
+
+</body>
+
+</html>
