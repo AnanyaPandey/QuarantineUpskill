@@ -190,7 +190,8 @@ Network load balancers allot layer 4 traffic hence they allow TCP / UDP based tr
 
  - These can handle millions of requests 
  - Latency is less ~100ms 
- - Towards internet : NLBs have one IP per zone and support assigning elastic IPs
+ - Towards internet : NLBs have one IP per zone and support assigning elastic IP
+ - we can expose the public IP ( elastic IP ) using the NLB only.
  - NLB not included in aws free tier. 
  - Target groups works same as ALB
  - There is no security group for NLB because it forwards the TCP/UDP on port 80 
@@ -324,6 +325,7 @@ It is not only limited to the available metrics in AWS, we can also set our cust
 
 - Scaling policies can be any metric or schedule
 - ASG use launch configuration/launch template
+- ASG cannot go beyond the maximum capacity for the sacle out event.(Even if scaling policy is set)
 - To update an ASG we must provide the new launch template
 - We can assign IAM role to ASG and it will be passed on to EC2 instances 
 - ASGs are free but AWS charges for the underlying instances that are launched.
