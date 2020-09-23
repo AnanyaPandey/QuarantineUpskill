@@ -87,5 +87,3 @@ EC2 is the most Fundamental service to the amazon web servie. Solution architect
  - EC2 Placement Groups 
  	- Cluster - Single point of failure/high Bandwidth connecivity
  	- Spread - High available - lean network connectivity
- 	- 
- 	- 
