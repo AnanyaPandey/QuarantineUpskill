@@ -277,6 +277,19 @@ For web server requests it could be between 1-20 seconds, for some critical data
 
 Max limit for this can be 3600s (1 Hour). or 0 to disable it and show error right away without any wait period. Any new connection during the draining will be redirected to other available instances. 
 
+| Features                               | CLB | ALB | NLB |
+|----------------------------------------|-----|-----|-----|
+| Support Cross Zone Loadbalancing       | Yes | Yes | Yes |
+| Charged user for cross zone data       | No  | No  | Yes |
+| Cross Zone LB Enabled by default       | No  | Yes | No  |
+| HTTP,HTTPS(layer7)                     | Yes | Yes | Yes |
+| TCP(Layer4)                            | Yes | No  | Yes |
+| UDP(layer4)                            | No  | No  | Yes |
+| Millions of requests                   | No  | No  | yes |
+| Supprt Multiple SSL Cert (SNI) support | No  | Yes | Yes |
+| Multiple Listeners can be installed    | No  | Yes | Yes |
+| One ELB per app / per SSL              | Yes | No  | No  |
+
 # <a name="a11">Auto Scaling Group. (ASG Overview)</a>
 ----
 
